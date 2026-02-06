@@ -1,0 +1,388 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, graphicx}
+
+\begin{document}
+
+\title{Lecture 5 Scribe — Bayes’ Theorem, Random Variables, and Probability Mass Function}
+\author{}
+\date{}
+\maketitle
+
+\section{Bayes’ Theorem}
+
+\subsection{Weighted Average of Conditional Probabilities}
+
+\textbf{Definitions and Notation}
+
+Let $A$ and $B$ be events in a probability space.
+
+The event $A$ can be expressed as:
+\[
+A = AB \cup AB^{c}
+\]
+because any outcome in $A$ must either:
+\begin{enumerate}
+    \item Belong to both $A$ and $B$, or
+    \item Belong to $A$ but not $B$.
+\end{enumerate}
+
+\textbf{Assumptions}
+\begin{itemize}
+    \item $AB$ and $AB^{c}$ are mutually exclusive events.
+    \item Probability axioms hold (especially additivity for mutually exclusive events).
+\end{itemize}
+
+\textbf{Derivation}
+
+Since $AB$ and $AB^{c}$ are mutually exclusive, by Axiom 3:
+\[
+Pr(A) = Pr(AB) + Pr(AB^{c})
+\]
+
+Using conditional probability:
+\[
+Pr(AB) = Pr(A|B)Pr(B), \quad Pr(AB^{c}) = Pr(A|B^{c})Pr(B^{c})
+\]
+
+Hence:
+\[
+Pr(A) = Pr(A|B)Pr(B) + Pr(A|B^{c})[1 - Pr(B)]
+\]
+
+\textbf{Result}
+
+The probability of event $A$ is a weighted average of conditional probabilities, where the weights are the probabilities of the conditioning events.
+
+\subsection{Learning by Example — Insurance Example}
+
+\textbf{Problem Statement}
+
+Population divided into:
+\begin{itemize}
+    \item Accident-prone
+    \item Not accident-prone
+\end{itemize}
+
+Given:
+\[
+Pr(\text{accident} \mid \text{accident-prone}) = 0.4
+\]
+\[
+Pr(\text{accident} \mid \text{not accident-prone}) = 0.2
+\]
+\[
+Pr(\text{accident-prone}) = 0.3
+\]
+
+Find probability a new policyholder has an accident in one year.
+
+\textbf{Solution}
+
+Let:
+\begin{itemize}
+    \item $A_1$: accident occurs within one year
+    \item $A$: person is accident-prone
+\end{itemize}
+
+Using total probability:
+\[
+Pr(A_1) = Pr(A_1|A)Pr(A) + Pr(A_1|A^{c})Pr(A^{c})
+\]
+\[
+= (0.4)(0.3) + (0.2)(0.7)
+\]
+\[
+= 0.12 + 0.14 = 0.26
+\]
+
+\textbf{Follow-up: Posterior Probability}
+
+Given accident occurred, find probability person is accident-prone.
+
+\[
+Pr(A|A_1) = \frac{Pr(AA_1)}{Pr(A_1)}
+= \frac{Pr(A)Pr(A_1|A)}{Pr(A_1)}
+= \frac{(0.3)(0.4)}{0.26}
+= \frac{13}{6}
+\]
+
+This illustrates Bayes’ reasoning: updating probability after observing an event.
+
+\subsection{Law of Total Probability}
+
+\textbf{Assumptions}
+
+Let $B_1, B_2, \dots, B_n$ be:
+\begin{itemize}
+    \item Mutually exclusive
+    \item Exactly one of these events occurs.
+\end{itemize}
+
+\textbf{Representation}
+
+Since $B_i$ are mutually exclusive:
+\[
+A = \bigcup_{i=1}^{n} AB_i
+\]
+
+Using conditional probability:
+\[
+Pr(A) = \sum_{i=1}^{n} Pr(A \mid B_i)Pr(B_i)
+\]
+
+This is the Law of Total Probability.
+
+\subsection{Bayes Formula (Proposition)}
+
+Using:
+\[
+Pr(AB_i) = Pr(B_i \mid A)Pr(A)
+\]
+
+We obtain:
+\[
+Pr(B_i \mid A) =
+\frac{Pr(A \mid B_i)Pr(B_i)}{\sum_{j=1}^{n} Pr(A \mid B_j)Pr(B_j)}
+\]
+
+\textbf{Interpretation}
+\begin{itemize}
+    \item $Pr(B_i)$: a priori probability
+    \item $Pr(B_i|A)$: posteriori probability after observing $A$.
+\end{itemize}
+
+\subsection{Example — Card Problem}
+
+\textbf{Setup}
+
+Three cards:
+\begin{enumerate}
+    \item RR (both sides red)
+    \item BB (both sides black)
+    \item RB (one red, one black)
+\end{enumerate}
+
+A card selected randomly and placed face up. Upper side is red.
+
+Find probability other side is black.
+
+\textbf{Notation}
+\begin{itemize}
+    \item RR, BB, RB: events representing card types
+    \item $R$: upturned side is red
+\end{itemize}
+
+\textbf{Computation}
+
+Using conditional probabilities:
+\[
+Pr(RB|R) = \frac{Pr(RB \cap R)}{Pr(R)}
+\]
+
+\[
+Pr(RB|R) =
+\frac{Pr(R|RB)Pr(RB)}
+{Pr(R|RR)Pr(RR) + Pr(R|RB)Pr(RB) + Pr(R|BB)Pr(BB)}
+\]
+
+\[
+= \frac{(1/2)(1/3)}{(1)(1/3) + (1/2)(1/3) + (0)(1/3)}
+\]
+
+\[
+= \frac{1/6}{1/3 + 1/6}
+= \frac{1/6}{1/2}
+= \frac{1}{3}
+\]
+
+Thus probability other side is black is $\frac{1}{3}$.
+
+\section{Random Variables}
+
+\subsection{Motivation}
+
+In experiments, interest often lies in a function of outcomes:
+\begin{itemize}
+    \item Dice $\rightarrow$ sum of values
+    \item Coins $\rightarrow$ number of heads
+\end{itemize}
+
+Such real-valued functions defined on sample space are called random variables.
+
+\subsection{Definition}
+
+A random variable on sample space $\Omega$ is a function:
+\[
+X : \Omega \rightarrow \mathbb{R}
+\]
+assigning each sample point $\omega$ a real number $X(\omega)$.
+
+\textbf{Restriction}
+
+Focus is on discrete random variables:
+\begin{itemize}
+    \item Finite or countably infinite values.
+\end{itemize}
+
+\subsection{Distribution of a Random Variable}
+
+Important components:
+\begin{enumerate}
+    \item Set of values $X$ can take.
+    \item Probabilities of those values.
+\end{enumerate}
+
+For value $a$:
+\[
+\{\omega \in \Omega : X(\omega) = a\}
+\]
+is an event; hence:
+\[
+Pr(X = a)
+\]
+
+Collection of these probabilities forms the distribution of $X$.
+
+\subsection{Visualization}
+
+Distribution represented as bar diagram:
+\begin{itemize}
+    \item x-axis: possible values
+    \item bar height at $a$: computed from probabilities of corresponding events.
+\end{itemize}
+
+\subsection{Discrete vs Continuous}
+
+\textbf{Discrete}
+\begin{itemize}
+    \item Countable support
+    \item Probability mass function
+    \item Probabilities assigned to single values
+\end{itemize}
+
+\textbf{Continuous}
+\begin{itemize}
+    \item Uncountable support
+    \item Probability density function
+    \item Probabilities assigned to intervals
+    \item Individual points have probability zero.
+\end{itemize}
+
+\subsection{Example — Tossing 3 Fair Coins}
+
+Let $Y$: number of heads.
+
+Possible values:
+\[
+0,1,2,3
+\]
+
+Probabilities:
+\[
+P(Y=0)=\frac{1}{8}, \quad
+P(Y=1)=\frac{3}{8}, \quad
+P(Y=2)=\frac{3}{8}, \quad
+P(Y=3)=\frac{1}{8}
+\]
+
+Since $Y$ must take one of these values:
+\[
+\sum_{i=0}^{3} P(Y=i) = 1
+\]
+
+\section{Probability Mass Function (PMF)}
+
+\subsection{Definition}
+
+A random variable $X$ that takes at most a countable number of values is discrete.
+
+Let discrete random variable have range:
+\[
+R_X = \{x_1, x_2, x_3, \dots\}
+\]
+
+Function:
+\[
+p_X(x_k) = Pr(X = x_k)
+\]
+is called the Probability Mass Function (PMF).
+
+Since $X$ must take one of the values:
+\[
+\sum_k p(x_k) = 1
+\]
+
+\subsection{Example — Two Tosses of a Fair Coin}
+
+Sample space:
+\[
+\{(H,H), (H,T), (T,H), (T,T)\}
+\]
+
+Let $X$: number of heads.
+
+PMF:
+\[
+p_X(x)=
+\begin{cases}
+1/4, & x=0 \text{ or } 2 \\
+1/2, & x=1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Example computation:
+\[
+P(X>0)=P(X=1)+P(X=2)=1/2+1/4=3/4
+\]
+
+\subsection{Example — Given PMF}
+
+Given:
+\[
+p(i) = c \frac{\lambda^i}{i!}, \quad i=0,1,2,\dots
+\]
+
+\textbf{Step 1: Use normalization}
+
+\[
+\sum_{i=0}^{\infty} p(i)=1
+\]
+
+\[
+\sum_{i=0}^{\infty} c \frac{\lambda^i}{i!} = 1
+\]
+
+\[
+c \sum_{i=0}^{\infty} \frac{\lambda^i}{i!} = 1
+\]
+
+\[
+c e^{\lambda} = 1 \Rightarrow c = \frac{1}{e^{\lambda}}
+\]
+
+\textbf{Step 2: Find probabilities}
+
+\[
+p(i) = \frac{1}{e^{\lambda}} \frac{\lambda^i}{i!}
+\]
+
+\[
+P(X=0)=c=\frac{1}{e^{\lambda}}
+\]
+
+\[
+P(X>2)=1-[p(0)+p(1)+p(2)]
+\]
+
+\section{End of Lecture 5 Key Takeaways}
+
+\begin{enumerate}
+    \item Probability of an event can be written as a weighted sum of conditional probabilities.
+    \item Law of Total Probability connects partitioned events to overall probability.
+    \item Bayes’ theorem updates prior probabilities using observed evidence.
+    \item Random variables map outcomes to real numbers; distributions assign probabilities to their values.
+    \item PMF describes probabilities for discrete random variables and must sum to 1.
+\end{enumerate}
+
+\end{document}
