@@ -1,0 +1,248 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb}
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\setstretch{1.2}
+
+\begin{document}
+
+CSE400 – Fundamentals of Probability in Computing
+
+Lecture 5 Scribe: Bayes’ Theorem, Random Variables, and Probability Mass Function
+
+\section{Bayes’ Theorem}
+
+\subsection{Weighted Average of Conditional Probabilities}
+
+Let $A$ and $B$ be events.
+
+We may express event $A$ as:
+\[
+A = AB \cup AB^{c}
+\]
+
+since an outcome in $A$ must either:
+
+be in both $A$ and $B$, or
+
+be in $A$ but not in $B$.
+
+The events $AB$ and $AB^{c}$ are mutually exclusive.  
+By Axiom 3 of Probability:
+\[
+\Pr(A) = \Pr(AB) + \Pr(AB^{c})
+\]
+
+Using the definition of conditional probability:
+\[
+\Pr(AB) = \Pr(A \mid B)\Pr(B)
+\]
+\[
+\Pr(AB^{c}) = \Pr(A \mid B^{c})\Pr(B^{c})
+\]
+
+Hence:
+\[
+\Pr(A) = \Pr(A \mid B)\Pr(B) + \Pr(A \mid B^{c})[1 - \Pr(B)]
+\]
+
+Interpretation:  
+The probability of event $A$ is a weighted average of conditional probabilities, where the weights are the probabilities of the conditioning events.
+
+L5\_A\_S1
+
+\section{Bayes’ Theorem – Learning by Example}
+
+\subsection*{Example 3.1 (Part 1)}
+
+An insurance company classifies people as:
+
+accident prone
+
+not accident prone
+
+Given:
+\[
+\Pr(\text{accident} \mid \text{accident prone}) = 0.4
+\]
+\[
+\Pr(\text{accident} \mid \text{not accident prone}) = 0.2
+\]
+\[
+\Pr(\text{accident prone}) = 0.3
+\]
+
+Let:
+
+$A_1$: policyholder has an accident within a year  
+
+$A$: policyholder is accident prone
+
+Then:
+\[
+\Pr(A_1) = \Pr(A_1 \mid A)\Pr(A) + \Pr(A_1 \mid A^{c})\Pr(A^{c})
+\]
+\[
+= (0.4)(0.3) + (0.2)(0.7) = 0.26
+\]
+
+\subsection*{Example 3.1 (Part 2)}
+
+Given that a policyholder had an accident, find the probability that they are accident prone.
+
+The required probability is:
+\[
+\Pr(A \mid A_1) = \frac{\Pr(A_1 \cap A)}{\Pr(A_1)}
+\]
+
+Using:
+\[
+\Pr(A_1 \cap A) = \Pr(A)\Pr(A_1 \mid A)
+\]
+
+\[
+\Pr(A \mid A_1) = \frac{(0.3)(0.4)}{0.26} = \frac{6}{13}
+\]
+
+L5\_A\_S1
+
+\section{Law of Total Probability and Bayes Formula}
+
+Let $B_1, B_2, \ldots, B_n$ be mutually exclusive events whose union is the sample space.
+
+\subsection*{Law of Total Probability}
+\[
+\Pr(A) = \sum_i \Pr(A \mid B_i)\Pr(B_i)
+\]
+
+\subsection*{Bayes Formula (Proposition 3.1)}
+\[
+\Pr(B_i \mid A) =
+\frac{\Pr(A \mid B_i)\Pr(B_i)}
+{\sum_j \Pr(A \mid B_j)\Pr(B_j)}
+\]
+
+$\Pr(B_i)$: a priori probability  
+
+$\Pr(B_i \mid A)$: a posteriori probability  
+
+L5\_A\_S1
+
+\section{Bayes Formula – Card Example (Example 3.2)}
+
+Three cards:
+
+RR (both sides red)
+
+BB (both sides black)
+
+RB (one red, one black)
+
+One card is randomly selected and placed on the ground.
+
+Let:
+
+$R$: upper side is red  
+
+$RR, BB, RB$: corresponding card events
+
+We compute:
+\[
+\Pr(RB \mid R) =
+\frac{\Pr(R \mid RB)\Pr(RB)}
+{\Pr(R \mid RR)\Pr(RR) + \Pr(R \mid RB)\Pr(RB) + \Pr(R \mid BB)\Pr(BB)}
+\]
+
+Substituting values:
+\[
+= \frac{(1/2)(1/3)}{(1)(1/3) + (1/2)(1/3) + (0)(1/3)} = \frac{1}{3}
+\]
+
+\section{Random Variables}
+
+\subsection*{Concept}
+
+A random variable is a real-valued function defined on a sample space.
+
+Values depend on experimental outcomes.
+
+Probabilities are assigned to these values.
+
+Examples:
+
+Sum of dice outcomes  
+
+Number of heads in coin tosses  
+
+The distribution of a random variable can be visualized using a bar diagram, where:
+
+x-axis: possible values  
+
+bar height: $\Pr[X=a]$
+
+L5\_A\_S1
+
+\subsection*{Example: Tossing 3 Fair Coins}
+
+Let $Y$ = number of heads.
+
+Possible values: $0,1,2,3$
+
+\[
+\Pr(Y=0) = \frac{1}{8}, \quad
+\Pr(Y=1) = \frac{3}{8}, \quad
+\Pr(Y=2) = \frac{3}{8}, \quad
+\Pr(Y=3) = \frac{1}{8}
+\]
+
+Since $Y$ must take one of these values:
+\[
+\sum_y \Pr(Y=y) = 1
+\]
+
+\section{Probability Mass Function (PMF)}
+
+A random variable is discrete if it can take at most a countable number of values.
+
+Let $X$ be a discrete random variable with range:
+\[
+R_X = \{x_1, x_2, x_3, \ldots\}
+\]
+
+The function:
+\[
+p(x_k) = \Pr(X = x_k)
+\]
+
+is called the Probability Mass Function (PMF) of $X$.
+
+Since $X$ must take one of its possible values:
+\[
+\sum_k p(x_k) = 1
+\]
+
+L5\_A\_S1
+
+\section{PMF Example}
+
+Given:
+\[
+p(i) = c\lambda^i, \quad i = 0,1,2,\ldots
+\]
+
+where $\lambda > 0$.
+
+Using normalization:
+\[
+\sum_{i=0}^{\infty} c\lambda^i = 1
+\]
+
+Required:
+
+$\Pr(X=0)$  
+
+$\Pr(X>2)$  
+
+(Computed directly from the PMF as shown in lecture slides.)
+
+\end{document}
