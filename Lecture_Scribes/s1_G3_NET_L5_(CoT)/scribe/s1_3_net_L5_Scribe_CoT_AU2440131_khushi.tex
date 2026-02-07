@@ -1,0 +1,235 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Lecture 5 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing} \\
+    \Large Lecture 5 Scribe
+}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-1.8cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Khushi Paghadar \hspace{2.5in}} \\ [1.5ex] \textbf{Enrollment No:} & {AU2440131 \hspace{2.5in}} \\ [1.5ex] \textbf{Email:} & {khushi.p12@ahduni.edu.in \hspace{2.1in}} \\ [1.5ex] \textbf{Date of Submission:} & {February 7\textsuperscript{th}, 2026 (11:59 PM) \hspace{1.2in}}
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ===================== OBJECTIVE =====================
+\section*{Objective}
+This scribe serves as an academic reference for exam preparation for \textbf{Lecture 5}.  
+All definitions, derivations, and examples are strictly based on the lecture slides and are
+presented in a step-by-step manner suitable for a closed-notes examination.
+
+% ===================== SECTION 1 =====================
+\section{Bayes’ Theorem as a Weighted Average of Conditional Probabilities}
+
+\subsection{Decomposition of an Event}
+Let $A$ and $B$ be two events. Any outcome that belongs to $A$ must satisfy exactly one of the following:
+\begin{itemize}
+    \item It lies in $A \cap B$
+    \item It lies in $A \cap B^c$
+\end{itemize}
+
+Thus,
+\[
+A = (A \cap B) \cup (A \cap B^c)
+\]
+The events $A \cap B$ and $A \cap B^c$ are mutually exclusive.
+
+\subsection{Application of Axiom 3}
+By Axiom 3 (Additivity),
+\[
+\Pr(A) = \Pr(A \cap B) + \Pr(A \cap B^c)
+\]
+
+\subsection{Use of Conditional Probability}
+Using the definition of conditional probability:
+\[
+\Pr(A \cap B) = \Pr(A \mid B)\Pr(B)
+\]
+\[
+\Pr(A \cap B^c) = \Pr(A \mid B^c)\Pr(B^c)
+\]
+
+Hence,
+\[
+\Pr(A) = \Pr(A \mid B)\Pr(B) + \Pr(A \mid B^c)\Pr(B^c)
+\]
+
+\subsection{Interpretation}
+The probability of $A$ is a weighted average of:
+\[
+\Pr(A \mid B) \quad \text{and} \quad \Pr(A \mid B^c)
+\]
+with weights $\Pr(B)$ and $\Pr(B^c)$ respectively.
+
+% ===================== SECTION 2 =====================
+\section{Example: Insurance Policyholder Problem}
+
+\subsection{Problem Statement}
+An insurance company classifies policyholders as:
+\begin{itemize}
+    \item Accident prone
+    \item Not accident prone
+\end{itemize}
+
+Given:
+\[
+\Pr(A \mid B) = 0.4, \quad
+\Pr(A \mid B^c) = 0.2, \quad
+\Pr(B) = 0.3
+\]
+where:
+\begin{itemize}
+    \item $A$: policyholder has an accident within one year
+    \item $B$: policyholder is accident prone
+\end{itemize}
+
+\subsection{Step-by-Step Solution}
+Using the law of total probability:
+\[
+\Pr(A) = \Pr(A \mid B)\Pr(B) + \Pr(A \mid B^c)\Pr(B^c)
+\]
+\[
+\Pr(A) = (0.4)(0.3) + (0.2)(0.7)
+\]
+\[
+\Pr(A) = 0.12 + 0.14 = 0.26
+\]
+
+\subsection{Bayes’ Theorem Application}
+Find $\Pr(B \mid A)$:
+\[
+\Pr(B \mid A) = \frac{\Pr(A \mid B)\Pr(B)}{\Pr(A)}
+\]
+\[
+\Pr(B \mid A) = \frac{(0.4)(0.3)}{0.26} = \frac{6}{13}
+\]
+
+% ===================== SECTION 3 =====================
+\section{Law of Total Probability}
+
+\subsection{Partition of the Sample Space}
+Let $B_1, B_2, \dots, B_n$ be mutually exclusive and exhaustive events such that:
+\[
+\Pr(B_i) > 0 \quad \forall i
+\]
+
+\subsection{Derivation}
+Since:
+\[
+A = \bigcup_{i=1}^{n} (A \cap B_i)
+\]
+and all intersections are mutually exclusive,
+\[
+\Pr(A) = \sum_{i=1}^{n} \Pr(A \cap B_i)
+\]
+Using conditional probability:
+\[
+\Pr(A) = \sum_{i=1}^{n} \Pr(A \mid B_i)\Pr(B_i)
+\]
+
+% ===================== SECTION 4 =====================
+\section{Bayes’ Theorem}
+
+\[
+\Pr(B_i \mid A) =
+\frac{\Pr(A \mid B_i)\Pr(B_i)}
+{\sum_{j=1}^{n} \Pr(A \mid B_j)\Pr(B_j)}
+\]
+
+\begin{itemize}
+    \item $\Pr(B_i)$: a priori probability
+    \item $\Pr(B_i \mid A)$: a posteriori probability
+\end{itemize}
+
+% ===================== SECTION 5 =====================
+\section{Three-Card Problem}
+
+\subsection{Card Definitions}
+\begin{itemize}
+    \item RR: card with two red sides
+    \item BB: card with two black sides
+    \item RB: card with one red and one black side
+\end{itemize}
+
+Let $R$ be the event that the upper side is red.
+
+\subsection{Required Probability}
+Find $\Pr(RB \mid R)$.
+
+\subsection{Solution}
+\[
+\Pr(RB \mid R) =
+\frac{\Pr(R \mid RB)\Pr(RB)}
+{\Pr(R \mid RR)\Pr(RR) + \Pr(R \mid RB)\Pr(RB) + \Pr(R \mid BB)\Pr(BB)}
+\]
+
+\[
+= \frac{(1/2)(1/3)}{(1)(1/3) + (1/2)(1/3) + (0)(1/3)}
+= \frac{1/6}{1/2} = \frac{1}{3}
+\]
+
+% ===================== SECTION 6 =====================
+\section{Random Variables}
+
+A random variable is a real-valued function defined on the sample space.
+
+\subsection{Example}
+Let $Y$ be the number of heads in three coin tosses.
+
+\[
+Y \in \{0,1,2,3\}
+\]
+
+% ===================== SECTION 7 =====================
+\section{Probability Mass Function (PMF)}
+
+\subsection{Definition}
+Let $X$ be a discrete random variable with range:
+\[
+R_X = \{x_1, x_2, x_3, \dots\}
+\]
+
+The PMF is defined as:
+\[
+p(x_i) = \Pr(X = x_i)
+\]
+
+\subsection{PMF Properties}
+\begin{enumerate}
+    \item $p(x_i) \ge 0$
+    \item $\displaystyle \sum_{i=1}^{\infty} p(x_i) = 1$
+\end{enumerate}
+
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of Lecture 5 Scribe}
+\end{center}
+
+\end{document}
