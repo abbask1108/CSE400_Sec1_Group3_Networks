@@ -1,0 +1,45 @@
+Generate a lecture scribe intended to serve as exam-reference material for CSE400 Lecture 9: Uniform, Exponential, Laplace, and Gamma Random Variables. The scribe must faithfully reconstruct the lecture content so that a student can reliably revise the lecture using only this document.
+
+Use only the provided context (lecture slides/PDF and relevant textbook excerpts). Do not introduce any content, examples, explanations, interpretations, or intuition that are not present in the provided context.
+
+While writing the lecture scribe, reason step-by-step through all definitions, notation, assumptions, results, derivations, graphical interpretations, and worked examples exactly as presented in the provided context. Ensure that all logical dependencies between ideas are explicitly explained so that the reasoning can be followed during exam revision.
+
+The lecture scribe must clearly and systematically reconstruct the lecture structure, including:
+
+1. Types of Continuous Random Variables
+   - Classification and conceptual introduction as presented in the lecture
+
+2. Uniform Random Variable
+   - Step-by-step definition of PDF and CDF
+   - Conditions under which the uniform distribution is defined
+   - Graphical interpretation of PDF and CDF
+   - Step-by-step reconstruction of sinusoid phase example and all probability calculations
+   - Applications of the uniform distribution discussed in the lecture
+
+3. Exponential Random Variable
+   - Step-by-step definition of PDF and CDF
+   - Conditions and parameter assumptions
+   - Graphical interpretation of PDF and CDF
+   - Step-by-step reconstruction of example probability problems
+   - Generalization of probability expressions where shown in the lecture
+
+4. Laplace Random Variable
+   - Definitions, properties, and interpretations presented in lecture
+
+5. Gamma Random Variable
+   - Definition, special cases, graphical representation, and example discussion as presented
+
+Include:
+- Definitions and notation exactly as introduced
+- Assumptions and conditions associated with results
+- Step-by-step derivations when present
+- Step-by-step worked examples when present
+- Graph and interpretation explanations when presented
+- Logical transitions between topics
+
+Maintain a formal academic tone appropriate for exam preparation.
+
+Do not:
+- Add new examples or explanations
+- Simplify into tutorial-style teaching
+- Include material from outside the provided lecture or textbook content
