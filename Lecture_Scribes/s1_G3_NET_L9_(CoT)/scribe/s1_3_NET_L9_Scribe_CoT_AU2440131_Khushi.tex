@@ -1,0 +1,183 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Lecture 9 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+\normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+\vspace{0.2cm}
+\textbf{CSE 400: Fundamentals of Probability in Computing} \\
+\Large Lecture 9: Continuous Random Variables
+}
+
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+\vspace{-2cm}
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Name:} & {Khushi Paghadar \hspace{2.8in}} \\[1.5ex]
+\textbf{Enrollment No:} & {AU2440131 \hspace{2.8in}} \\[1.5ex]
+\textbf{Email:} & {khushi.p12@ahduni.edu.in \hspace{2.4in}} \\[1.5ex]
+\textbf{Date of Submission:} & {9 February 2026 \hspace{2.2in}}
+\end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ===================== LECTURE SCRIBE =====================
+
+\section*{1. Introduction to Continuous Random Variables}
+
+A \textbf{continuous random variable} is a random variable that can take infinitely many values within a given interval.
+Unlike discrete random variables, the probability that a continuous random variable takes any exact value is zero.
+
+Instead of probability mass functions (PMFs), continuous random variables are described using \textbf{probability density functions (PDFs)}.
+
+A function $f_X(x)$ is a valid PDF if:
+\begin{itemize}
+\item $f_X(x) \ge 0$ for all $x$
+\item $\displaystyle \int_{-\infty}^{\infty} f_X(x)\,dx = 1$
+\end{itemize}
+
+The probability that $X$ lies in an interval $[a,b]$ is:
+\[
+P(a \le X \le b) = \int_a^b f_X(x)\,dx
+\]
+
+\section*{2. Uniform Random Variable}
+
+A continuous random variable $X$ is said to have a \textbf{uniform distribution} over the interval $[a,b]$ if its PDF is:
+\[
+f_X(x) =
+\begin{cases}
+\dfrac{1}{b-a}, & a \le x \le b \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+This distribution models situations where all values in an interval are equally likely.
+
+The mean and variance of a uniform random variable are:
+\[
+\mathbb{E}[X] = \frac{a+b}{2}, \qquad
+\text{Var}(X) = \frac{(b-a)^2}{12}
+\]
+
+\section*{3. Exponential Random Variable}
+
+An \textbf{exponential random variable} is commonly used to model waiting times.
+Its PDF is given by:
+\[
+f_X(x) =
+\begin{cases}
+\lambda e^{-\lambda x}, & x \ge 0 \\
+0, & x < 0
+\end{cases}
+\]
+where $\lambda > 0$ is the rate parameter.
+
+The exponential distribution has the \textbf{memoryless property}:
+\[
+P(X > s+t \mid X > s) = P(X > t)
+\]
+
+The mean and variance are:
+\[
+\mathbb{E}[X] = \frac{1}{\lambda}, \qquad
+\text{Var}(X) = \frac{1}{\lambda^2}
+\]
+
+\section*{4. Laplace Random Variable}
+
+The \textbf{Laplace distribution} is symmetric about its mean and is defined by:
+\[
+f_X(x) = \frac{1}{2b} e^{-\frac{|x-\mu|}{b}}, \quad -\infty < x < \infty
+\]
+where $\mu$ is the location parameter and $b > 0$ is the scale parameter.
+
+The Laplace distribution is often used in modeling noise and error distributions.
+
+Its mean and variance are:
+\[
+\mathbb{E}[X] = \mu, \qquad
+\text{Var}(X) = 2b^2
+\]
+
+\section*{5. Gamma Random Variable}
+
+A \textbf{Gamma distribution} generalizes the exponential distribution.
+Its PDF is:
+\[
+f_X(x) =
+\begin{cases}
+\dfrac{\lambda^k x^{k-1} e^{-\lambda x}}{\Gamma(k)}, & x \ge 0 \\
+0, & x < 0
+\end{cases}
+\]
+where $k > 0$ is the shape parameter and $\lambda > 0$ is the rate parameter.
+
+The Gamma function is defined as:
+\[
+\Gamma(k) = \int_0^\infty x^{k-1} e^{-x} dx
+\]
+
+The mean and variance are:
+\[
+\mathbb{E}[X] = \frac{k}{\lambda}, \qquad
+\text{Var}(X) = \frac{k}{\lambda^2}
+\]
+
+\section*{6. Gaussian (Normal) Distribution}
+
+The \textbf{Gaussian distribution} is one of the most important distributions in probability and statistics.
+Its PDF is:
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left( -\frac{(x-\mu)^2}{2\sigma^2} \right)
+\]
+
+Here, $\mu$ is the mean and $\sigma^2$ is the variance.
+
+The Gaussian distribution is symmetric about its mean and satisfies:
+\[
+\mathbb{E}[X] = \mu, \qquad \text{Var}(X) = \sigma^2
+\]
+
+\section*{7. Gaussian Density Estimation}
+
+Gaussian density estimation is used to model unknown data distributions.
+Given data points $x_1, x_2, \dots, x_n$, the parameters are estimated as:
+\[
+\hat{\mu} = \frac{1}{n} \sum_{i=1}^n x_i, \qquad
+\hat{\sigma}^2 = \frac{1}{n} \sum_{i=1}^n (x_i - \hat{\mu})^2
+\]
+
+This technique is widely used in machine learning, pattern recognition, and statistical inference.
+
+\bigskip
+\hrule
+\vspace{0.3cm}
+
+\begin{center}
+\small \textit{End of Lecture 9 Scribe}
+\end{center}
+
+\end{document}
+
