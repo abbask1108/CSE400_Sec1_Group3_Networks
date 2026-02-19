@@ -1,0 +1,13 @@
+Generate a lecture scribe intended to serve as exam-oriented reference material for Lecture 5.
+ Use only the provided context (lecture slides and relevant textbook content). 
+ While writing the scribe, reason step by step through all definitions, assumptions, theorems, proofs, derivations, and worked examples exactly as presented in the context. 
+ Make the logical flow explicit so that a student can follow the reasoning during revision.
+  Include: Definitions and notation 
+  Assumptions and conditions 
+  Statements of results and 
+  theorems Step-by-step proofs or derivations when present 
+  Worked examples with intermediate steps
+   Clear logical connections between ideas 
+   Maintain a formal academic tone suitable for exam preparation. 
+   Do not introduce new explanations, examples, intuition, or material not present in the provided context. 
+   Ensure all reasoning and content come strictly from the lecture and textbook.

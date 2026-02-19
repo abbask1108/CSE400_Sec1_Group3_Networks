@@ -1,0 +1,294 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, graphicx}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{Lecture 9 Scribe --- Continuous Random Variables}
+\author{Course: CSE400 Fundamentals of Probability in Computing}
+\date{Topic: Uniform, Exponential, Laplace and Gamma Random Variables \\ Source: Lecture slides (Feb 2, 2026)}
+
+\begin{document}
+
+\maketitle
+
+\section{Lecture Overview and Scope}
+
+The lecture introduces types of continuous random variables and focuses on:
+\begin{itemize}
+    \item Uniform random variable
+    \item Exponential random variable
+    \item Laplace random variable (listed in outline)
+    \item Gamma random variable (listed with graph, special cases, example, homework)
+    \item Problem solving and in-class activity
+\end{itemize}
+
+\section{Continuous Random Variables}
+
+A continuous random variable (RV) is characterized through:
+\begin{itemize}
+    \item Probability Density Function (PDF)
+    \item Cumulative Distribution Function (CDF)
+    \item Applications and problem solving (mentioned in lecture annotations)
+\end{itemize}
+
+\section{Uniform Random Variable}
+
+\subsection{Definition and Notation}
+
+Let $X \sim \text{Uniform}(a,b)$.
+
+\textbf{Probability Density Function (PDF)}
+\[
+f_X(x) =
+\begin{cases}
+\frac{1}{b-a}, & a \le x < b \\
+0, & \text{elsewhere}
+\end{cases}
+\]
+
+\textbf{Cumulative Distribution Function (CDF)}
+\[
+F_X(x) =
+\begin{cases}
+0, & x < a \\
+\frac{x-a}{b-a}, & a \le x < b \\
+1, & x \ge b
+\end{cases}
+\]
+
+\subsection{Graphical Interpretation}
+
+PDF: constant over $[a,b]$.
+
+CDF: increases linearly from 0 to 1 over $[a,b]$.
+
+\subsection{Example \#1 --- Uniform RV (Phase of Sinusoid)}
+
+Problem
+
+Phase uniformly distributed over $\theta \in [0,2\pi]$.
+
+\[
+f_{\theta}(\theta) =
+\begin{cases}
+\frac{1}{2\pi}, & 0 \le \theta < 2\pi \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+Tasks:
+\begin{enumerate}
+    \item $Pr(\theta > 3\pi/4)$
+    \item $Pr(\theta < \pi \mid \theta > 3\pi/4)$
+    \item $Pr(\cos\theta < 1/2)$
+\end{enumerate}
+
+\subsection{Solution --- Step-by-Step}
+
+Key Property of Uniform Distribution
+
+For uniform RV on $[a,b]$:
+\[
+Pr(a < \theta < b) = \frac{b-a}{2\pi}
+\]
+
+\textbf{(a) Compute $Pr(\theta > 3\pi/4)$}
+
+Interval length:
+\[
+2\pi - \frac{3\pi}{4} = \frac{5\pi}{4}
+\]
+
+\[
+Pr(\theta > 3\pi/4) = \frac{5\pi/4}{2\pi} = \frac{5}{8}
+\]
+
+\textbf{(b) Conditional Probability}
+
+\[
+Pr(A|B) = \frac{Pr(A \cap B)}{Pr(B)}
+\]
+
+Where:
+\[
+A: \theta < \pi, \quad B: \theta > 3\pi/4
+\]
+
+Intersection:
+\[
+3\pi/4 < \theta < \pi
+\]
+
+Length:
+\[
+\pi - \frac{3\pi}{4} = \frac{\pi}{4}
+\]
+
+\[
+Pr(A \cap B) = \frac{\pi/4}{2\pi} = \frac{1}{8}
+\]
+
+\[
+Pr(B) = \frac{5}{8}
+\]
+
+\[
+Pr(\theta < \pi \mid \theta > 3\pi/4) = \frac{1/8}{5/8} = \frac{1}{5}
+\]
+
+\textbf{(c) Compute $Pr(\cos\theta < 1/2)$}
+
+Solve:
+\[
+\cos\theta = \frac{1}{2}
+\]
+
+\[
+\theta = \frac{\pi}{3}, \frac{5\pi}{3}
+\]
+
+Condition:
+\[
+\frac{\pi}{3} < \theta < \frac{5\pi}{3}
+\]
+
+Interval length:
+\[
+\frac{5\pi}{3} - \frac{\pi}{3} = \frac{4\pi}{3}
+\]
+
+\[
+Pr(\cos\theta < 1/2) = \frac{4\pi/3}{2\pi} = \frac{2}{3}
+\]
+
+\subsection{Applications of Uniform Random Variable}
+
+\begin{itemize}
+    \item Phase of sinusoidal signals (angles equally likely)
+    \item Random number generation in simulations
+    \item Arrival time in a known window with no preference
+\end{itemize}
+
+\section{Exponential Random Variable}
+
+\subsection{Definition}
+
+For parameter $b>0$:
+
+\textbf{PDF}
+\[
+f_X(x) = \frac{1}{b} e^{-x/b} u(x)
+\]
+
+\textbf{CDF}
+\[
+F_X(x) = [1 - e^{-x/b}] u(x)
+\]
+
+where $u(x)$ is the unit step function.
+
+\subsection{Graphical Interpretation}
+
+PDF: decays exponentially from maximum at $x=0$.
+
+CDF: monotonically increases toward 1.
+
+\subsection{Example \#2 --- Exponential RV}
+
+Problem
+
+Tasks:
+\begin{enumerate}
+    \item Find $Pr(3X < 5)$
+    \item Generalize to $Pr(3X < y)$
+\end{enumerate}
+
+Step-by-Step Derivation
+
+\textbf{(a) Compute $Pr(3X < 5)$}
+
+Transform inequality:
+\[
+3X < 5 \Rightarrow X < \frac{5}{3}
+\]
+
+Using CDF:
+\[
+Pr(X < a) = F_X(a) = 1 - e^{-a}
+\]
+
+So:
+\[
+Pr(3X < 5) = 1 - e^{-5/3}
+\]
+
+\textbf{(b) Generalization}
+
+(valid for $y>0$)
+\[
+Pr(3X < y) = Pr\left(X < \frac{y}{3}\right) = 1 - e^{-y/3}
+\]
+
+\section{Laplace and Gamma Random Variables}
+
+Mentioned explicitly in lecture outline:
+
+\begin{itemize}
+    \item Laplace RV --- example to be discussed
+    \item Gamma RV:
+    \begin{itemize}
+        \item graph and special cases
+        \item example
+        \item homework problem
+    \end{itemize}
+\end{itemize}
+
+These are part of lecture scope though detailed derivations appear later or in extended material.
+
+\section{Problem Solving Emphasis}
+
+The lecture structure stresses:
+\begin{itemize}
+    \item working with PDFs and CDFs
+    \item computing probabilities via interval lengths (uniform)
+    \item using CDF transformation (exponential)
+    \item applying conditional probability formulas
+\end{itemize}
+
+\section{Logical Flow of Lecture}
+
+\begin{enumerate}
+    \item Motivation: continuous distributions
+    \item Uniform RV: definition $\rightarrow$ graphs $\rightarrow$ example $\rightarrow$ applications
+    \item Exponential RV: definition $\rightarrow$ graphs $\rightarrow$ example
+    \item Laplace \& Gamma introduced
+    \item Problem solving and estimation tasks
+\end{enumerate}
+
+\section{Key Exam Takeaways}
+
+\textbf{Uniform RV}
+\begin{itemize}
+    \item Constant PDF on interval
+    \item Linear CDF
+    \item Probability = interval length / total length
+\end{itemize}
+
+\textbf{Exponential RV}
+\begin{itemize}
+    \item PDF: decaying exponential
+    \item CDF: $1 - e^{-x/b}$
+    \item Probabilities via CDF substitution
+\end{itemize}
+
+\textbf{Conditional Probability Transformation}
+\[
+Pr(A|B) = \frac{Pr(A \cap B)}{Pr(B)}
+\]
+
+Convert inequalities before applying CDF:
+\[
+Pr(aX < b) \Rightarrow Pr\left(X < \frac{b}{a}\right)
+\]
+
+\end{document}

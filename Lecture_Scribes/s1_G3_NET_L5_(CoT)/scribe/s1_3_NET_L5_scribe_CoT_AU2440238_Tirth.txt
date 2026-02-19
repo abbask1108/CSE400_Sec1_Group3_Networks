@@ -1,0 +1,807 @@
+\documentclass[12pt]{article}
+
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{titlesec}
+\usepackage{enumitem}
+
+\geometry{margin=1in}
+\setstretch{1.15}
+
+% Section formatting
+\titleformat{\section}
+{\large\bfseries}{\thesection.}{0.5em}{}
+
+\titleformat{\subsection}
+{\normalsize\bfseries}{\thesubsection}{0.5em}{}
+
+\begin{document}
+
+\begin{flushleft}
+
+{\Large \textbf{CSE400 – Lecture 5 Scribe}}
+
+\vspace{0.2cm}
+
+{\normalsize \textbf{Bayes’ Theorem, Random Variables, and Probability Mass Function}}
+
+\vspace{0.2cm}
+
+
+\textbf{Name:} Tirth Pathar
+
+\textbf{Enrollment Number:} AU2440238
+
+\end{flushleft}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.5cm}
+
+\section{Bayes’ Theorem}
+
+\subsection{Weighted Average of Conditional Probabilities}
+
+\textbf{Event Representation Using Set Relationships}
+
+\vspace{0.2cm}
+
+Let $A$ and $B$ be events.
+
+\vspace{0.2cm}
+
+The event $A$ can be expressed as:
+
+\[
+A = AB \cup AB^c
+\]
+
+This representation follows because for an outcome to belong to event $A$, it must satisfy one of the following:
+
+\begin{itemize}
+\item The outcome is in both $A$ and $B$
+\item The outcome is in $A$ but not in $B$
+\end{itemize}
+
+Thus, event $A$ is decomposed into two disjoint components:
+
+\begin{itemize}
+\item $AB$
+\item $AB^c$
+\end{itemize}
+
+These two events are \textbf{mutually exclusive}.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Derivation of Probability as Weighted Conditional Probabilities}
+
+\vspace{0.2cm}
+
+Since $AB$ and $AB^c$ are mutually exclusive, by \textbf{Axiom 3 of probability}, we have:
+
+\[
+P(A) = P(AB) + P(AB^c)
+\]
+
+Using conditional probability definitions:
+
+\[
+P(AB) = P(A \mid B)P(B)
+\]
+
+\[
+P(AB^c) = P(A \mid B^c)P(B^c)
+\]
+
+\vspace{0.3cm}
+
+Since:
+
+\[
+P(B^c) = 1 - P(B)
+\]
+
+\vspace{0.2cm}
+
+Substituting:
+
+\[
+P(A) = P(A \mid B)P(B) + P(A \mid B^c)[1 - P(B)]
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Interpretation}
+
+\vspace{0.2cm}
+
+The probability of event $A$ is expressed as a \textbf{weighted average of conditional probabilities}, where:
+
+\begin{itemize}
+\item $P(A \mid B)$ is weighted by $P(B)$
+\item $P(A \mid B^c)$ is weighted by $P(B^c)$
+\end{itemize}
+
+\vspace{0.5cm}
+
+\subsection{Learning by Example}
+
+\textbf{Example 3.1 (Part 1)}
+
+\vspace{0.3cm}
+
+\textbf{Given}
+
+\vspace{0.2cm}
+
+Population is divided into two classes:
+
+\begin{itemize}
+\item Accident-prone persons
+\item Not accident-prone persons
+\end{itemize}
+
+Provided probabilities:
+
+\[
+P(A_1 \mid A) = 0.4
+\]
+
+\[
+P(A_1 \mid A^c) = 0.2
+\]
+
+\[
+P(A) = 0.3
+\]
+
+\vspace{0.2cm}
+
+Let:
+
+\begin{itemize}
+\item $A_1$: Policyholder has an accident within 1 year
+\item $A$: Policyholder is accident prone
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Required}
+
+Find:
+
+\[
+P(A_1)
+\]
+
+\vspace{0.4cm}
+
+\textbf{Solution}
+
+Using the weighted conditional probability result:
+
+\[
+P(A_1) = P(A_1 \mid A)P(A) + P(A_1 \mid A^c)P(A^c)
+\]
+
+\vspace{0.2cm}
+
+Substitute values:
+
+\[
+P(A_1) = (0.4)(0.3) + (0.2)(0.7)
+\]
+
+\[
+P(A_1) = 0.12 + 0.14
+\]
+
+\[
+P(A_1) = 0.26
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Example 3.1 (Part 2)}
+
+\vspace{0.3cm}
+
+\textbf{Given}
+
+A policyholder had an accident.
+
+\vspace{0.3cm}
+
+\textbf{Required}
+
+Find:
+
+\[
+P(A \mid A_1)
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Solution}
+
+Using conditional probability:
+
+\[
+P(A \mid A_1) = \frac{P(AA_1)}{P(A_1)}
+\]
+
+Using multiplication rule:
+
+\[
+P(AA_1) = P(A)P(A_1 \mid A)
+\]
+
+Thus:
+
+\[
+P(A \mid A_1) = \frac{P(A)P(A_1 \mid A)}{P(A_1)}
+\]
+
+\vspace{0.2cm}
+
+Substitute values:
+
+\[
+P(A \mid A_1) = \frac{(0.3)(0.4)}{0.26}
+\]
+
+\[
+P(A \mid A_1) = \frac{0.12}{0.26}
+\]
+
+\[
+P(A \mid A_1) = \frac{6}{13}
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.5cm}
+
+
+\subsection{Formal Introduction: Law of Total Probability}
+
+\vspace{0.3cm}
+
+Let:
+
+\[
+B_1, B_2, \ldots, B_n
+\]
+
+be mutually exclusive events such that:
+
+\[
+\bigcup_{i=1}^{n} B_i = B
+\]
+
+Exactly one of these events occurs.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Derivation}
+
+Event $A$ can be expressed as:
+
+\[
+A = \bigcup_{i=1}^{n} AB_i
+\]
+
+Since the events $AB_i$ are mutually exclusive:
+
+\[
+P(A) = \sum_{i=1}^{n} P(AB_i)
+\]
+
+Using conditional probability:
+
+\[
+P(AB_i) = P(A \mid B_i)P(B_i)
+\]
+
+Therefore:
+
+\[
+P(A) = \sum_{i=1}^{n} P(A \mid B_i)P(B_i)
+\]
+
+This is the \textbf{Law of Total Probability}.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{Derivation of Bayes' Formula}
+
+\vspace{0.3cm}
+
+Using:
+
+\[
+P(AB_i) = P(B_i \mid A)P(A)
+\]
+
+and substituting into conditional probability:
+
+\[
+P(B_i \mid A) =
+\frac{P(A \mid B_i)P(B_i)}
+{\sum_{j=1}^{n} P(A \mid B_j)P(B_j)}
+\]
+
+This is known as the \textbf{Bayes Formula (Proposition 3.1)}.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Apriori and Posteriori Probabilities}
+
+\begin{itemize}
+
+\item \textbf{Apriori Probability}
+
+\[
+P(B_i)
+\]
+
+Probability formed from presupposed models.
+
+\vspace{0.2cm}
+
+\item \textbf{Posteriori Probability}
+
+\[
+P(B_i \mid A)
+\]
+
+Probability obtained after observing event $A$.
+
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{Example 3.2}
+
+\textbf{Problem Description}
+
+\vspace{0.2cm}
+
+Three cards exist:
+
+\begin{itemize}
+\item Card 1: Both sides red (RR)
+\item Card 2: Both sides black (BB)
+\item Card 3: One red and one black (RB)
+\end{itemize}
+
+One card is selected randomly and placed face up.
+
+\vspace{0.3cm}
+
+Let:
+
+\begin{itemize}
+\item $R$: Upturned side is red
+\end{itemize}
+
+\vspace{0.2cm}
+
+Find:
+
+\[
+P(RB \mid R)
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Solution}
+
+Let events:
+
+\begin{itemize}
+\item RR -- all red card
+\item BB -- all black card
+\item RB -- red-black card
+\end{itemize}
+
+Each card chosen with probability $\frac{1}{3}$.
+
+\vspace{0.3cm}
+
+Using Bayes rule:
+
+\[
+P(RB \mid R) =
+\frac{P(R \mid RB)P(RB)}
+{P(R \mid RR)P(RR) + P(R \mid RB)P(RB) + P(R \mid BB)P(BB)}
+\]
+
+\vspace{0.3cm}
+
+Substitute:
+
+\[
+P(R \mid RB) = \frac{1}{2}
+\]
+
+\[
+P(R \mid RR) = 1
+\]
+
+\[
+P(R \mid BB) = 0
+\]
+
+\vspace{0.3cm}
+
+Thus:
+
+\[
+P(RB \mid R) =
+\frac{(\frac{1}{2})(\frac{1}{3})}
+{(1)(\frac{1}{3}) + (\frac{1}{2})(\frac{1}{3}) + (0)(\frac{1}{3})}
+\]
+
+\[
+P(RB \mid R) = \frac{1/6}{1/3 + 1/6}
+\]
+
+\[
+P(RB \mid R) = \frac{1/6}{1/2}
+\]
+
+\[
+P(RB \mid R) = \frac{1}{3}
+\]
+
+\vspace{0.5cm}
+
+\section{Random Variables}
+
+\subsection{Motivation}
+
+Often interest lies in a function of outcomes rather than outcomes themselves.
+
+\vspace{0.2cm}
+
+Examples:
+
+\begin{itemize}
+\item Dice tossing $\rightarrow$ interest in sum
+\item Coin tossing $\rightarrow$ interest in number of heads
+\end{itemize}
+
+These functions are called \textbf{Random Variables}.
+
+\vspace{0.5cm}
+
+\subsection{Formal Definition}
+
+A random variable $X$ on sample space $\Omega$ is a function:
+
+\[
+X : \Omega \rightarrow \mathbb{R}
+\]
+
+It assigns each sample point $\omega \in \Omega$ a real number:
+
+\[
+X(\omega)
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{Distribution of a Random Variable}
+
+Two components define the distribution:
+
+\begin{enumerate}
+\item The set of values taken by the random variable
+\item The probabilities associated with those values
+\end{enumerate}
+
+Let $a$ be a possible value.
+
+\vspace{0.2cm}
+
+Event:
+
+\[
+\{\omega \in \Omega : X(\omega) = a\}
+\]
+
+is denoted:
+
+\[
+X = a
+\]
+
+Probability:
+
+\[
+P[X = a]
+\]
+
+The collection of these probabilities forms the distribution of $X$.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Visualization}
+
+\begin{itemize}
+\item X-axis: Values taken by random variable
+\item Bar height: Probability $P[X = a]$
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{Discrete and Continuous Random Variables}
+
+\textbf{Discrete Random Variable}
+
+\begin{itemize}
+\item Countable support
+\item Probabilities assigned to single values
+\item Each value has positive probability
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Continuous Random Variable}
+
+\begin{itemize}
+\item Uncountable support
+\item Probability density function
+\item Probabilities assigned to intervals
+\item Each exact value has zero probability
+\end{itemize}
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{Random Variable Example}
+
+\textbf{Example: Three Coin Tosses}
+
+\vspace{0.2cm}
+
+Let $Y$ denote number of heads.
+
+\vspace{0.2cm}
+
+Possible values:
+
+\[
+Y \in \{0,1,2,3\}
+\]
+
+\vspace{0.2cm}
+
+Probabilities:
+
+\[
+P(Y = 0) = \frac{1}{8}
+\]
+
+\[
+P(Y = 1) = \frac{3}{8}
+\]
+
+\[
+P(Y = 2) = \frac{3}{8}
+\]
+
+\[
+P(Y = 3) = \frac{1}{8}
+\]
+
+\vspace{0.2cm}
+
+Since $Y$ must take one of these values:
+
+\[
+1 = \sum_{i=0}^{3} P(Y = i)
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+
+\section{Probability Mass Function (PMF)}
+
+\vspace{0.5cm}
+
+\subsection{Definition}
+
+A random variable that takes at most a countable number of values is called \textbf{discrete}.
+
+\vspace{0.2cm}
+
+Let $X$ be discrete with range:
+
+\[
+R_X = \{x_1, x_2, x_3, \ldots \}
+\]
+
+The function:
+
+\[
+p(x_k) = P(X = x_k)
+\]
+
+is called the \textbf{Probability Mass Function (PMF)}.
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{PMF Property}
+
+Since $X$ must take one of its possible values:
+
+\[
+\sum_k p(x_k) = 1
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{PMF Example -- Two Independent Coin Tosses}
+
+Sample space:
+
+\[
+\Omega = \{(H,H), (H,T), (T,H), (T,T)\}
+\]
+
+\vspace{0.3cm}
+
+Let:
+
+\[
+X = \text{Number of heads}
+\]
+
+\vspace{0.3cm}
+
+PMF:
+
+\[
+p_X(x) =
+\begin{cases}
+\frac{1}{4}, & x = 0 \text{ or } x = 2 \\
+\frac{1}{2}, & x = 1 \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\vspace{0.3cm}
+
+Example probability:
+
+\[
+P(X > 0) = P(X = 1) + P(X = 2)
+\]
+
+\[
+P(X > 0) = \frac{1}{2} + \frac{1}{4}
+\]
+
+\[
+P(X > 0) = \frac{3}{4}
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\subsection{PMF Functional Example}
+
+Given PMF:
+
+\[
+p(i) = c \frac{\lambda^i}{i!}, \quad i = 0,1,2,\ldots
+\]
+
+Since:
+
+\[
+\sum_{i=0}^{\infty} p(i) = 1
+\]
+
+We have:
+
+\[
+c \sum_{i=0}^{\infty} \frac{\lambda^i}{i!} = 1
+\]
+
+Using:
+
+\[
+e^\lambda = \sum_{i=0}^{\infty} \frac{\lambda^i}{i!}
+\]
+
+Thus:
+
+\[
+c e^\lambda = 1
+\]
+
+\[
+c = e^{-\lambda}
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+\textbf{Required Probabilities}
+
+\[
+P(X = 0) = p(0) = c
+\]
+
+\[
+P(X = 0) = e^{-\lambda}
+\]
+
+\[
+P(X > 2) = 1 - [P(X = 0) + P(X = 1) + P(X = 2)]
+\]
+
+\vspace{0.4cm}
+\hrule
+\vspace{0.4cm}
+
+
+\textbf{End of Lecture Topics}
+
+\begin{itemize}
+\item Bayes' Theorem
+\item Law of Total Probability
+\item Apriori and Posteriori Probabilities
+\item Random Variables and Distributions
+\item Probability Mass Function and Examples
+\end{itemize}
+
+
+
+
+
+
+
+\end{document}

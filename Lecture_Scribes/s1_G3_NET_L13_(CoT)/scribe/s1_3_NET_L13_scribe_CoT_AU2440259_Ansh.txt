@@ -1,0 +1,619 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\usepackage{enumitem}
+\geometry{margin=1in}
+\setlength{\parskip}{6pt}
+
+\title{CSE 400: Fundamentals of Probability in Computing\\
+Tutorial 1 -- Complete Lecture Scribe}
+\author{School of Engineering and Applied Science\\
+Ahmedabad University}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Q1}
+
+Twenty distinct dishes are divided into four groups of five dishes each. The order within groups does not matter, and the order of the groups does not matter.
+
+\subsection*{(a) Total number of ways}
+
+We divide 20 distinct objects into four unlabeled groups of size 5 each.
+
+Since:
+\begin{itemize}
+    \item All 20 dishes are distinct,
+    \item Each group contains exactly 5 dishes,
+    \item Order inside each group does not matter,
+    \item Order of groups does not matter,
+\end{itemize}
+
+We apply the multinomial formula:
+
+\[
+\text{Total ways} =
+\frac{20!}{(5!)^4 4!}
+\]
+
+The denominator accounts for:
+\begin{itemize}
+    \item $5!$ permutations inside each of the four groups,
+    \item $4!$ permutations of the groups themselves.
+\end{itemize}
+
+\subsection*{(b) Probability all platters contain dishes of same cuisine}
+
+There are 5 dishes from each cuisine (Italian, Indian, Chinese, Mexican).
+
+For each platter to contain dishes of only one cuisine:
+\begin{itemize}
+    \item Each cuisine must form exactly one platter.
+\end{itemize}
+
+Since platters are unlabeled, this configuration is unique.
+
+Thus,
+
+\[
+P = \frac{1}{\frac{20!}{(5!)^4 4!}}
+\]
+
+\[
+P = \frac{(5!)^4 4!}{20!}
+\]
+
+---
+
+\section*{Q2}
+
+Arrival time is uniformly distributed over 30 minutes.
+
+Uniform distribution argument:
+
+\[
+P(A) = \frac{\text{favorable time}}{\text{total time}}
+\]
+
+Total interval = 30 minutes.
+
+\subsection*{(a) Waiting time $< 5$ minutes}
+
+Passenger must arrive within 5 minutes before bus:
+
+Intervals:
+\[
+7{:}10\text{–}7{:}15, \quad 7{:}25\text{–}7{:}30
+\]
+
+Total favorable time:
+\[
+5 + 5 = 10 \text{ minutes}
+\]
+
+\[
+P(\text{wait} < 5) = \frac{10}{30} = \frac{1}{3}
+\]
+
+\subsection*{(b) Waiting time $> 10$ minutes}
+
+Arrival more than 10 minutes before next bus:
+
+\[
+7{:}00\text{–}7{:}05, \quad 7{:}15\text{–}7{:}20
+\]
+
+Total favorable time = 10 minutes.
+
+\[
+P(\text{wait} > 10) = \frac{10}{30} = \frac{1}{3}
+\]
+
+---
+
+\section*{Q3}
+
+Let:
+\[
+L = \text{arrives late}
+\]
+\[
+E = \text{leaves early}
+\]
+
+Given:
+\[
+P(L) = 0.15
+\]
+\[
+P(E) = 0.25
+\]
+\[
+P(L \cap E) = 0.08
+\]
+
+We need:
+\[
+P(L^c \mid E^c)
+\]
+
+\subsection*{Step 1: Compute complements}
+
+Complement Rule:
+
+\[
+P(E^c) = 1 - P(E) = 1 - 0.25 = 0.75
+\]
+
+\subsection*{Step 2: Use inclusion-exclusion}
+
+\[
+P(L \cup E) = P(L) + P(E) - P(L \cap E)
+\]
+
+\[
+= 0.15 + 0.25 - 0.08 = 0.32
+\]
+
+\subsection*{Step 3: Apply De Morgan's Law}
+
+\[
+(L \cup E)^c = L^c \cap E^c
+\]
+
+Thus,
+
+\[
+P(L^c \cap E^c) = 1 - P(L \cup E)
+\]
+
+\[
+= 1 - 0.32 = 0.68
+\]
+
+\subsection*{Step 4: Conditional Probability Formula}
+
+\[
+P(L^c \mid E^c) =
+\frac{P(L^c \cap E^c)}{P(E^c)}
+\]
+
+\[
+= \frac{0.68}{0.75}
+\]
+
+\[
+= 0.907
+\]
+
+---
+
+\section*{Q4}
+
+Poisson Distribution is identified because:
+\begin{itemize}
+    \item Errors occur per page,
+    \item Events are rare,
+    \item Fixed interval.
+\end{itemize}
+
+Parameter:
+\[
+\lambda = 0.2
+\]
+
+Poisson PMF:
+
+\[
+P(X = k) = e^{-\lambda}\frac{\lambda^k}{k!}
+\]
+
+\subsection*{(a) $P(X = 0)$}
+
+\[
+P(X = 0) = e^{-0.2}\frac{(0.2)^0}{0!}
+\]
+
+\[
+= e^{-0.2}
+\]
+
+\[
+= 0.8187
+\]
+
+\subsection*{(b) $P(X \ge 2)$}
+
+Complement Rule:
+
+\[
+P(X \ge 2) = 1 - P(X=0) - P(X=1)
+\]
+
+Compute:
+
+\[
+P(X=1) = e^{-0.2}\frac{(0.2)^1}{1!}
+\]
+
+\[
+= 0.2e^{-0.2}
+\]
+
+\[
+= 0.1637
+\]
+
+Thus,
+
+\[
+P(X \ge 2) = 1 - 0.8187 - 0.1637
+\]
+
+\[
+= 0.0176
+\]
+
+---
+
+\section*{Q5}
+
+Poisson distribution with:
+
+\[
+\lambda = 3.5
+\]
+
+\subsection*{(a) $P(X \ge 2)$}
+
+Complement Rule:
+
+\[
+P(X \ge 2) = 1 - P(0) - P(1)
+\]
+
+\[
+P(0) = e^{-3.5} = 0.0302
+\]
+
+\[
+P(1) = 3.5e^{-3.5} = 0.1057
+\]
+
+\[
+P(X \ge 2) = 1 - 0.0302 - 0.1057
+\]
+
+\[
+= 0.8641
+\]
+
+\subsection*{(b) $P(X \le 1)$}
+
+\[
+P(X \le 1) = P(0) + P(1)
+\]
+
+\[
+= 0.0302 + 0.1057 = 0.1359
+\]
+
+---
+
+\section*{Q6}
+
+Poisson with:
+\[
+\lambda = 3
+\]
+
+\subsection*{(a) $P(X \ge 3)$}
+
+Complement Rule:
+
+\[
+P(X \ge 3) = 1 - P(0) - P(1) - P(2)
+\]
+
+\[
+P(0) = e^{-3} = 0.0498
+\]
+
+\[
+P(1) = 3e^{-3} = 0.1494
+\]
+
+\[
+P(2) = \frac{3^2}{2!}e^{-3}
+= \frac{9}{2}e^{-3}
+= 0.2240
+\]
+
+\[
+P(X \ge 3) = 1 - 0.4232
+= 0.5768
+\]
+
+\subsection*{(b) Conditional Probability}
+
+\[
+P(X \ge 3 \mid X \ge 1)
+=
+\frac{P(X \ge 3)}{P(X \ge 1)}
+\]
+
+\[
+P(X \ge 1) = 1 - P(0)
+= 1 - 0.0498
+= 0.9502
+\]
+
+\[
+= \frac{0.5768}{0.9502}
+= 0.607
+\]
+
+---
+
+\section*{Q7}
+
+Given PDF:
+
+\[
+f_X(x) = \frac{1}{\sqrt{8\pi}}
+\exp\left(
+-\frac{(x+3)^2}{8}
+\right)
+\]
+
+Compare with Gaussian form:
+
+\[
+\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(
+-\frac{(x-m)^2}{2\sigma^2}
+\right)
+\]
+
+Identify:
+
+\[
+m = -3
+\]
+\[
+\sigma^2 = 4
+\]
+\[
+\sigma = 2
+\]
+
+Gaussian relations:
+
+\[
+F_X(x) = \Phi\left(\frac{x-m}{\sigma}\right)
+\]
+
+\[
+P(X > x) = Q\left(\frac{x-m}{\sigma}\right)
+\]
+
+\subsection*{1) $P(X \le 0)$}
+
+\[
+= \Phi\left(\frac{0-(-3)}{2}\right)
+\]
+
+\[
+= \Phi\left(\frac{3}{2}\right)
+\]
+
+\[
+= 1 - Q\left(\frac{3}{2}\right)
+\]
+
+\subsection*{2) $P(X > 4)$}
+
+\[
+= Q\left(\frac{4+3}{2}\right)
+= Q\left(\frac{7}{2}\right)
+\]
+
+\subsection*{3) $P(|X+3| < 2)$}
+
+\[
+-2 < X+3 < 2
+\]
+
+\[
+-5 < X < -1
+\]
+
+\[
+= \Phi(1) - \Phi(-1)
+\]
+
+Using:
+
+\[
+\Phi(-x) = 1 - \Phi(x)
+\]
+
+\[
+= 2\Phi(1) - 1
+\]
+
+\[
+= 1 - 2Q(1)
+\]
+
+\subsection*{4) $P(|X-2| > 1)$}
+
+\[
+X < 1 \quad \text{or} \quad X > 3
+\]
+
+\[
+= F_X(1) + P(X>3)
+\]
+
+\[
+= 1 - Q(2) + Q(3)
+\]
+
+---
+
+\section*{Q8}
+
+Binomial distribution identified:
+
+\[
+X \sim \text{Binomial}(12, \theta)
+\]
+
+If innocent:
+
+\[
+\sum_{i=5}^{12}
+\binom{12}{i}
+\theta^i (1-\theta)^{12-i}
+\]
+
+If guilty:
+
+\[
+\sum_{i=8}^{12}
+\binom{12}{i}
+\theta^i (1-\theta)^{12-i}
+\]
+
+By conditioning on guilt probability $\alpha$:
+
+\[
+\alpha \sum_{i=8}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
++
+(1-\alpha)\sum_{i=5}^{12} \binom{12}{i} \theta^i (1-\theta)^{12-i}
+\]
+
+---
+
+\section*{Q9}
+
+Given:
+
+\[
+p(i) = c\frac{\lambda^i}{i!}
+\]
+
+Normalization condition:
+
+\[
+\sum_{i=0}^{\infty} p(i) = 1
+\]
+
+\[
+c \sum_{i=0}^{\infty} \frac{\lambda^i}{i!} = 1
+\]
+
+Using:
+
+\[
+e^x = \sum_{i=0}^{\infty} \frac{x^i}{i!}
+\]
+
+\[
+ce^\lambda = 1
+\]
+
+\[
+c = e^{-\lambda}
+\]
+
+\subsection*{(a) $P(X=0)$}
+
+\[
+= e^{-\lambda}
+\]
+
+\subsection*{(b) $P(X>2)$}
+
+Complement Rule:
+
+\[
+1 - P(0) - P(1) - P(2)
+\]
+
+\[
+= 1 - e^{-\lambda} - \lambda e^{-\lambda}
+- \frac{\lambda^2}{2} e^{-\lambda}
+\]
+
+CDF step function property included exactly as given.
+
+---
+
+\section*{Q10}
+
+Binomial distribution:
+
+\[
+X \sim \text{Binomial}(n,p)
+\]
+
+System effective if at least half function.
+
+\subsection*{(a)}
+
+5-component effective:
+
+\[
+\binom{5}{3}p^3(1-p)^2
++
+\binom{5}{4}p^4(1-p)
++
+p^5
+\]
+
+3-component effective:
+
+\[
+\binom{3}{2}p^2(1-p)
++
+p^3
+\]
+
+Inequality reduces to:
+
+\[
+3(p-1)^2(2p-1) > 0
+\]
+
+\[
+p > \frac{1}{2}
+\]
+
+\subsection*{(b)}
+
+Derived difference:
+
+\[
+\binom{2k-1}{k}
+p^k(1-p)^k(2p-1)
+\]
+
+Positive iff:
+
+\[
+p > \frac{1}{2}
+\]
+
+---
+
+\end{document}
+
+
+\end{document}
