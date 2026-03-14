@@ -1,0 +1,129 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumerate}
+\usepackage{booktabs}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\section*{CSE400 - Fundamentals of Probability in Computing}
+\subsection*{Lecture L15-L18: Joint Random Variables and Joint Distributions}
+\textit{(Prepared as an exam-oriented lecture scribe from the provided lecture slides)}
+
+\subsection*{1. Why Study Joint Random Variables?}
+In many real-world applications, multiple random variables are observed simultaneously. Instead of analyzing each variable independently, we must analyze their combined probabilistic behavior. Thus, we define Joint Random Variables to model relationships between two or more random variables.
+
+\subsubsection*{Example 1: Smart Transportation}
+Define two random variables:
+\begin{itemize}
+    \item $X =$ Vehicle Speed
+    \item $Y =$ Traffic Density
+\end{itemize}
+\textbf{Reasoning:} The relationship between speed and density is not independent. $X$ and $Y$ are correlated random variables used for adaptive traffic signals, congestion prediction, and autonomous vehicle routing.
+
+\subsubsection*{Example 2: Wireless Network Performance}
+Define two random variables:
+\begin{itemize}
+    \item $X =$ Signal-to-Noise Ratio (SNR)
+    \item $Y =$ Data Throughput
+\end{itemize}
+\textbf{Reasoning:} Throughput depends on SNR but is also affected by network congestion; therefore, variables exhibit conditional relationships. Applications include 5G scheduling and network planning.
+
+\subsubsection*{Example 3: Weather Prediction}
+\begin{itemize}
+    \item $X =$ Rainfall
+    \item $Y =$ Temperature
+\end{itemize}
+Application: Weather forecasting.
+
+\subsubsection*{Example 4: Drone Delivery}
+\begin{itemize}
+    \item $X =$ Wind Speed
+    \item $Y =$ Delivery Time
+\end{itemize}
+Application: Logistics and UAV systems.
+
+\subsubsection*{Example 5: Rolling Two Dice}
+\begin{itemize}
+    \item $X =$ Outcome of first die
+    \item $Y =$ Outcome of second die
+\end{itemize}
+Events like $X+Y=7$ or $X > Y$ require the joint probability mass function (joint PMF).
+
+\subsection*{2. Discrete Case - Joint PMF}
+For discrete random variables, the joint behavior is described using the Joint Probability Mass Function.
+
+\textbf{Definition:} The Joint PMF of two discrete random variables $X$ and $Y$ is
+\[ p_{X,Y}(x,y) = P(X=x, Y=y) \]
+This function gives the probability that both events occur simultaneously: $X$ takes value $x$ and $Y$ takes value $y$.
+
+\subsection*{3. Joint PMF Table Representation}
+For discrete variables, the joint PMF can be represented as a table where each cell represents $P(X=x_i, Y=y_j)$.
+
+\begin{center}
+\begin{tabular}{cccc}
+\toprule
+$Y \setminus X$ & $x_1$ & $x_2$ & $x_3$ \\
+\midrule
+$y_1$ & $P(x_1, y_1)$ & $P(x_2, y_1)$ & $P(x_3, y_1)$ \\
+$y_2$ & $P(x_1, y_2)$ & $P(x_2, y_2)$ & $P(x_3, y_2)$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\subsection*{4. Example - Rolling Two Dice}
+Two dice are rolled. $X=$ value of first die, $Y=$ value of second die.
+\begin{itemize}
+    \item \textbf{Step 1: Possible Values:} $X, Y \in \{1, 2, 3, 4, 5, 6\}$.
+    \item \textbf{Step 2: Total Outcomes:} $6 \times 6 = 36$ equally likely outcomes.
+    \item \textbf{Step 3: Joint Probability:} For any pair $(x, y)$, $P(X=x, Y=y) = \frac{1}{36}$.
+    \item \textbf{Step 4: Example Event:} For $X+Y=7$, possible outcomes are (1,6), (2,5), (3,4), (4,3), (5,2), (6,1).
+    \[ P(X+Y=7) = \frac{6}{36} \]
+\end{itemize}
+
+\subsection*{5. Continuous Case - Joint PDF}
+For continuous random variables, probabilities are described using a Joint Probability Density Function (Joint PDF), denoted as $f_{X,Y}(x,y)$.
+
+\textbf{Probability Calculation:} The probability that $(X, Y)$ lies within region $R$ is:
+\[ P((X,Y) \in R) = \iint_R f_{X,Y}(x,y) \, dx \, dy \]
+
+\textbf{Geometric Interpretation:} The probability corresponds to the volume under the surface $z = f_{X,Y}(x,y)$ over a specified region $R$ in the $x-y$ plane.
+
+\subsection*{6. Worked Example (Continuous Case) Reasoning Steps}
+\begin{enumerate}
+    \item \textbf{Step 1:} Identify the region of support (where the density is defined).
+    \item \textbf{Step 2:} Verify normalization: $\iint f_{X,Y}(x,y) \, dx \, dy = 1$.
+    \item \textbf{Step 3:} Compute desired probability by integrating the density over the specified region.
+\end{enumerate}
+
+\subsection*{7. Joint Cumulative Distribution Function (Joint CDF)}
+\textbf{Definition:} The Joint CDF of random variables $X$ and $Y$ is defined as:
+\[ F_{X,Y}(x,y) = P(X \le x, Y \le y) \]
+This represents the probability that both variables fall below given thresholds simultaneously.
+
+\subsection*{8. Joint CDF - Continuous and Discrete Cases}
+\textbf{Continuous Case:}
+\[ F_{X,Y}(x,y) = \int_{-\infty}^{x} \int_{-\infty}^{y} f_{X,Y}(u,v) \, dv \, du \]
+Reasoning involves replacing probability with integration of the joint PDF over the region $(-\infty, x] \times (-\infty, y]$.
+
+\textbf{Discrete Case:}
+\[ F_{X,Y}(x,y) = \sum_{u \le x} \sum_{v \le y} P(X=u, Y=v) \]
+Reasoning involves identifying all pairs satisfying $u \le x$ and $v \le y$ and summing the corresponding joint PMF values.
+
+\subsection*{9. Properties of the Joint CDF}
+\begin{itemize}
+    \item \textbf{Property 1 (Bounds):} $0 \le F_{X,Y}(x,y) \le 1$.
+    \item \textbf{Property 2 (Monotonicity):} The function is non-decreasing in both arguments. If $x_1 \le x_2$, then $F(x_1, y) \le F(x_2, y)$.
+    \item \textbf{Property 3 (Limits):} $\lim_{x \to \infty, y \to \infty} F_{X,Y}(x,y) = 1$.
+    \item \textbf{Property 4 (Rectangle Probability):} For any rectangle $a < X \le b, c < Y \le d$:
+    \[ P(a < X \le b, c < Y \le d) = F(b,d) - F(a,d) - F(b,c) + F(a,c) \]
+\end{itemize}
+
+\subsection*{10. Summary}
+Relationships between multiple random variables are modeled using joint probability distributions (Joint PMF for discrete and Joint PDF for continuous). The Joint CDF represents cumulative probabilities and is essential for modeling correlated systems in computing and engineering.
+
+\end{document}
