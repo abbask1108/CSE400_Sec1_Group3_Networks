@@ -1,0 +1,321 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Lecture 17 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+\normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+\vspace{0.2cm}
+\textbf{CSE 400: Fundamentals of Probability in Computing}\\
+\Large Lecture 17: Joint Random Variables and Joint Distributions
+}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\vspace{-1.5cm}
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Name:} & {Khushi Paghadar \hspace{2.5in}} \\ [1.5ex]
+\textbf{Enrollment No:} & {AU2440131 \hspace{2.5in}} \\ [1.5ex]
+\textbf{Course:} & {CSE 400 \hspace{2.8in}} \\ [1.5ex]
+\textbf{Topic:} & {Joint Random Variables} \\ [1.5ex]
+\end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+\section*{Objective}
+
+This scribe serves as an academic reference for exam preparation for Lecture 17.  
+It summarizes the key concepts of joint random variables, joint distributions, and their properties.
+
+\section*{1. Why Study Joint Random Variables?}
+
+In many real-world situations, more than one random variable must be analyzed at the same time.  
+Examples include:
+
+\begin{itemize}
+\item Smart transportation systems
+\item Wireless network performance
+\item Weather prediction
+\item Drone delivery systems
+\item Rolling two dice
+\end{itemize}
+
+In such systems, we often want to understand how two variables behave together.
+
+For example:
+
+\[
+X = \text{Vehicle Speed}, \quad Y = \text{Traffic Density}
+\]
+
+A natural question is whether high vehicle speed can occur when traffic density is also high.  
+To answer such questions, we study the \textbf{joint distribution} of the variables.
+
+\section*{2. Joint Random Variables}
+
+Let $X$ and $Y$ be two random variables defined on the same probability space.
+
+Instead of studying them individually, we analyze their \textbf{joint behavior}.  
+The pair $(X,Y)$ represents the simultaneous outcome of both variables.
+
+\section*{3. Discrete Case – Joint Probability Mass Function}
+
+For discrete random variables, the joint distribution is defined using the \textbf{Joint Probability Mass Function (PMF)}.
+
+\[
+p_{X,Y}(x,y) = P(X = x, Y = y)
+\]
+
+This function gives the probability that:
+
+\[
+X = x \quad \text{and} \quad Y = y
+\]
+
+occur simultaneously.
+
+\subsection*{Properties of Joint PMF}
+
+\textbf{1. Non-negativity}
+
+\[
+p_{X,Y}(x,y) \geq 0
+\]
+
+\textbf{2. Total Probability}
+
+\[
+\sum_x \sum_y p_{X,Y}(x,y) = 1
+\]
+
+\section*{4. Joint PMF Table Representation}
+
+A joint PMF can be represented using a two-dimensional probability table.
+
+\[
+\begin{array}{c|ccc}
+Y \backslash X & x_1 & x_2 & x_3 \\
+\hline
+y_1 & p(x_1,y_1) & p(x_2,y_1) & p(x_3,y_1) \\
+y_2 & p(x_1,y_2) & p(x_2,y_2) & p(x_3,y_2) \\
+y_3 & p(x_1,y_3) & p(x_2,y_3) & p(x_3,y_3)
+\end{array}
+\]
+
+Each cell represents the probability of a specific pair $(x,y)$.
+
+\section*{5. Example: Rolling Two Dice}
+
+Let:
+
+\[
+X = \text{value on first die}
+\]
+
+\[
+Y = \text{value on second die}
+\]
+
+Each die can take values:
+
+\[
+\{1,2,3,4,5,6\}
+\]
+
+Since the dice are fair:
+
+\[
+P(X=x,Y=y) = \frac{1}{36}
+\]
+
+for all possible pairs.
+
+Example:
+
+\[
+P(X+Y=7)
+\]
+
+Possible outcomes:
+
+\[
+(1,6),(2,5),(3,4),(4,3),(5,2),(6,1)
+\]
+
+Thus:
+
+\[
+P(X+Y=7)=\frac{6}{36}=\frac{1}{6}
+\]
+
+\section*{6. Continuous Case – Joint Probability Density Function}
+
+For continuous random variables, the joint distribution is defined using the \textbf{Joint Probability Density Function (PDF)}.
+
+\[
+f_{X,Y}(x,y)
+\]
+
+Probability over a region $A$ is given by:
+
+\[
+P((X,Y)\in A)=\iint_A f_{X,Y}(x,y)\,dx\,dy
+\]
+
+\subsection*{Properties}
+
+\textbf{Non-negativity}
+
+\[
+f_{X,Y}(x,y)\ge0
+\]
+
+\textbf{Total Probability}
+
+\[
+\int_{-\infty}^{\infty}\int_{-\infty}^{\infty} f_{X,Y}(x,y)\,dx\,dy=1
+\]
+
+\section*{7. Geometric Interpretation}
+
+In the continuous case:
+
+\begin{itemize}
+\item The joint PDF forms a surface above the $xy$-plane.
+\item The probability of a region corresponds to the \textbf{volume under the surface}.
+\end{itemize}
+
+If $R$ is a region:
+
+\[
+P((X,Y)\in R)=\iint_R f_{X,Y}(x,y)\,dx\,dy
+\]
+
+\section*{8. Joint Cumulative Distribution Function}
+
+The \textbf{Joint CDF} is defined as:
+
+\[
+F_{X,Y}(x,y)=P(X\le x, Y\le y)
+\]
+
+It represents the probability that both variables are less than or equal to specific values.
+
+\section*{9. Joint CDF – Continuous Case}
+
+For continuous random variables:
+
+\[
+F_{X,Y}(x,y)=\int_{-\infty}^{x}\int_{-\infty}^{y} f_{X,Y}(u,v)\,dv\,du
+\]
+
+\section*{10. Joint CDF – Discrete Case}
+
+For discrete random variables:
+
+\[
+F_{X,Y}(x,y)=\sum_{u\le x}\sum_{v\le y} p_{X,Y}(u,v)
+\]
+
+Thus:
+
+\begin{itemize}
+\item Continuous case → double integration
+\item Discrete case → double summation
+\end{itemize}
+
+\section*{11. Properties of Joint CDF}
+
+\textbf{Bounds}
+
+\[
+0 \le F_{X,Y}(x,y) \le 1
+\]
+
+\textbf{Monotonicity}
+
+The function is non-decreasing in both arguments.
+
+\textbf{Limits}
+
+\[
+\lim_{x\to\infty,\,y\to\infty} F_{X,Y}(x,y)=1
+\]
+
+\textbf{Rectangle Probability}
+
+For region
+
+\[
+a<X\le b,\quad c<Y\le d
+\]
+
+\[
+P(a<X\le b, c<Y\le d)=F(b,d)-F(a,d)-F(b,c)+F(a,c)
+\]
+
+\section*{12. Marginal Distributions}
+
+Marginal distributions can be obtained from the joint distribution.
+
+\textbf{Discrete case}
+
+\[
+P_X(x)=\sum_y p_{X,Y}(x,y)
+\]
+
+\[
+P_Y(y)=\sum_x p_{X,Y}(x,y)
+\]
+
+\textbf{Continuous case}
+
+\[
+f_X(x)=\int_{-\infty}^{\infty} f_{X,Y}(x,y)\,dy
+\]
+
+\[
+f_Y(y)=\int_{-\infty}^{\infty} f_{X,Y}(x,y)\,dx
+\]
+
+\section*{13. Key Takeaways}
+
+\begin{enumerate}
+\item Joint random variables describe the simultaneous behavior of two variables.
+\item Discrete distributions use \textbf{Joint PMF}.
+\item Continuous distributions use \textbf{Joint PDF}.
+\item Joint probabilities in continuous cases require \textbf{double integrals}.
+\item Joint CDF represents cumulative probability of both variables.
+\item Marginal distributions are obtained from the joint distribution.
+\end{enumerate}
+
+\bigskip
+\hrule
+\vspace{0.2cm}
+
+\begin{center}
+\small \textit{End of Lecture Scribe}
+\end{center}
+
+\end{document}
