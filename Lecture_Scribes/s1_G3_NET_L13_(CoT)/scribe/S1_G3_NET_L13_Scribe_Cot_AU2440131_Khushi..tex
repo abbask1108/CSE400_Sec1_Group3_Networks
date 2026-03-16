@@ -1,0 +1,334 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Tutorial 1 – Lecture Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+\normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+\vspace{0.2cm}
+\textbf{CSE 400: Fundamentals of Probability in Computing}\\
+\Large Tutorial Review Session Scribe
+}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\vspace{-1cm}
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Name:} & Khushi \\[1.5ex]
+\textbf{Enrollment No:} & AU2440131 \\[1.5ex]
+\textbf{Course:} & CSE 400 \\[1.5ex]
+\textbf{Topic:} & Tutorial 1 Review
+\end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ===================================================
+\section*{Objective}
+
+This scribe serves as a structured revision checkpoint and academic reference for 
+Tutorial Session 1 of \textbf{CSE 400: Fundamentals of Probability in Computing}. 
+The document reviews key probability distributions and counting principles used in solving the tutorial problems.
+
+\bigskip
+
+% ===================================================
+\section*{Core Formulas}
+
+\textbf{1. Poisson Distribution}
+
+\[
+P(X=k) = \frac{e^{-\lambda}\lambda^k}{k!}
+\]
+
+\textbf{2. Normal Distribution PDF}
+
+\[
+f_X(x)=\frac{1}{\sqrt{2\pi\sigma^2}}
+\exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)
+\]
+
+\textbf{3. Conditional Probability}
+
+\[
+P(A|B) = \frac{P(A \cap B)}{P(B)}
+\]
+
+\textbf{4. Binomial Distribution}
+
+\[
+P(X=k) = \binom{n}{k}p^k(1-p)^{n-k}
+\]
+
+\bigskip
+
+\hrule
+\vspace{0.5cm}
+
+% ===================================================
+\section*{Tutorial Problems and Solutions}
+
+\begin{enumerate}[label=\textbf{Question \arabic*:}]
+
+%----------------------------------------------------
+\item \textbf{Food Festival Dish Division}
+
+We divide 20 distinct dishes into four groups of 5.
+
+\textbf{Total ways}
+
+\[
+\frac{20!}{(5!)^4 4!}
+\]
+
+\textbf{Probability each platter has one cuisine}
+
+If each cuisine already has 5 dishes, there is only one favourable arrangement.
+
+\[
+P = \frac{1}{\frac{20!}{(5!)^4 4!}}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Bus Waiting Time}
+
+Passenger arrival is uniform between 0 and 30 minutes.
+
+\textbf{(a) Wait < 5 minutes}
+
+Favourable interval = 10 minutes
+
+\[
+P = \frac{10}{30} = \frac{1}{3}
+\]
+
+\textbf{(b) Wait > 10 minutes}
+
+Favourable interval = 10 minutes
+
+\[
+P = \frac{10}{30} = \frac{1}{3}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Conditional Probability}
+
+Given
+
+\[
+P(A)=0.15, \quad P(B)=0.25, \quad P(A\cap B)=0.08
+\]
+
+\[
+P(A|B)=\frac{0.08}{0.25}
+\]
+
+\[
+P(A|B)=0.32
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Typographical Errors}
+
+\[
+\lambda = 0.2
+\]
+
+\textbf{(a) Probability of 0 errors}
+
+\[
+P(X=0)=e^{-0.2}
+\]
+
+\[
+P(X=0)\approx0.8187
+\]
+
+\textbf{(b) Probability of at least 2 errors}
+
+\[
+P(X\ge2)=1-P(0)-P(1)
+\]
+
+\[
+P(1)=0.2e^{-0.2}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Airplane Crashes}
+
+\[
+\lambda =3.5
+\]
+
+\textbf{(a) At least 2 crashes}
+
+\[
+P(X\ge2)=1-P(0)-P(1)
+\]
+
+\textbf{(b) At most 1 crash}
+
+\[
+P(X\le1)=P(0)+P(1)
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Highway Accidents}
+
+\[
+X\sim Poisson(3)
+\]
+
+\textbf{(a)}
+
+\[
+P(X\ge3)=1-P(0)-P(1)-P(2)
+\]
+
+\textbf{(b)}
+
+\[
+P(X\ge3|X\ge1)=\frac{P(X\ge3)}{P(X\ge1)}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Normal Distribution}
+
+Given
+
+\[
+f_X(x)=\frac{1}{\sqrt{8\pi}} e^{-\frac{(x+3)^2}{8}}
+\]
+
+Comparing with the standard normal form:
+
+\[
+\mu=-3,\quad \sigma=2
+\]
+
+\textbf{Example}
+
+\[
+Z=\frac{X-\mu}{\sigma}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Jury Decision}
+
+\[
+X\sim Binomial(12,\theta)
+\]
+
+Conviction occurs if at least 8 jurors vote guilty.
+
+\[
+P(\text{correct})=
+\sum_{k=8}^{12}\binom{12}{k}\theta^k(1-\theta)^{12-k}
+\]
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{PMF Identification}
+
+Given
+
+\[
+p(i)=\frac{c\lambda^i}{i!}
+\]
+
+Using normalization:
+
+\[
+\sum_{i=0}^{\infty}p(i)=1
+\]
+
+\[
+c=e^{-\lambda}
+\]
+
+Thus
+
+\[
+p(i)=\frac{e^{-\lambda}\lambda^i}{i!}
+\]
+
+which is a Poisson distribution.
+
+\newpage
+
+%----------------------------------------------------
+\item \textbf{Communication System Reliability}
+
+Each component works with probability $p$.
+
+\[
+X\sim Binomial(n,p)
+\]
+
+System works if at least half of components function.
+
+For 3 components:
+
+\[
+P_3=P(X\ge2)
+\]
+
+For 5 components:
+
+\[
+P_5=P(X\ge3)
+\]
+
+The larger system is better when
+
+\[
+p>\frac{1}{2}
+\]
+
+\end{enumerate}
+
+\bigskip
+
+\hrule
+\vspace{0.3cm}
+
+\begin{center}
+\small \textit{End of Tutorial Scribe}
+\end{center}
+
+\end{document}
