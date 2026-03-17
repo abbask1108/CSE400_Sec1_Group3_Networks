@@ -1,0 +1,31 @@
+Generate a lecture scribe intended to serve as exam-oriented reference material. Use only the provided context (lecture slides and relevant textbook content) and do not introduce any information beyond it.
+
+While writing the scribe, reason step by step through all definitions, assumptions, theorems, proofs, derivations, and worked examples exactly as presented in the context. Ensure that all reasoning is explicitly included in the scribe so that a student can follow the logical flow during revision.
+
+The scribe must:
+
+Include definitions, notation, and assumptions clearly
+
+Present theorem statements and results precisely
+
+Provide step-by-step proofs and derivations wherever present in the context
+
+Include worked examples with all intermediate steps exactly as shown
+
+Maintain a clear and logical structure aligned with the lecture flow
+
+Use a formal and academic tone suitable for exam preparation
+
+Do not:
+
+Introduce new explanations, examples, or intuition not present in the context
+
+Skip intermediate reasoning steps in proofs or derivations
+
+Add any external knowledge beyond the provided materials
+
+Ensure the final output is complete, faithful to the source material, and sufficient for a student to revise the lecture using only this scribe.
+
+Make sure that don't forget any topics from the pdf
+
+And give me latex code for this 
