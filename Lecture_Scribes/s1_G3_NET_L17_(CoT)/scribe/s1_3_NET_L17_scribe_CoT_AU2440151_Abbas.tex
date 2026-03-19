@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400: Lecture 17 Scribe\\
+Joint Random Variables \& Joint Distributions}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Why Study Joint Random Variables?}
+
+In science and real-life applications, we are often interested in two (or more) random variables simultaneously. \text{\cite{ppt}} :contentReference[oaicite:0]{index=0}
+
+\subsection*{Examples}
+\begin{itemize}
+    \item Height and weight of giraffes
+    \item IQ and birthweight of children
+    \item Frequency of exercise and rate of heart disease
+    \item Air pollution level and respiratory illness rate
+    \item Number of Facebook friends and age of members
+\end{itemize}
+
+\subsection*{Applications}
+\begin{itemize}
+    \item Smart Transportation: $X=$ vehicle speed, $Y=$ traffic density
+    \item Wireless Networks: $X=$ SNR, $Y=$ throughput
+    \item Weather Prediction: $X=$ rainfall, $Y=$ temperature
+    \item Drone Delivery: $X=$ wind speed, $Y=$ delivery time
+    \item Dice Example: conditions such as $X+Y=7$, $X>Y$
+\end{itemize}
+
+Joint distributions allow us to compute probabilities involving both variables and understand their relationship. If variables are not independent, dependence is studied using covariance and correlation.
+
+\section{Discrete Case: Joint PMF}
+
+\subsection{Setup}
+Let $X$ and $Y$ be discrete random variables:
+\[
+X = \{x_1, x_2, \dots, x_n\}, \quad Y = \{y_1, y_2, \dots, y_m\}
+\]
+
+Then:
+\[
+(X,Y) \in \{(x_i, y_j)\}
+\]
+
+\subsection{Definition}
+\[
+p(x_i, y_j) = P(X = x_i, Y = y_j)
+\]
+
+\subsection{Properties}
+\begin{itemize}
+    \item $0 \leq p(x_i, y_j) \leq 1$
+    \item $\sum_{i=1}^{n} \sum_{j=1}^{m} p(x_i, y_j) = 1$
+\end{itemize}
+
+\subsection{Joint PMF Table}
+Joint PMF is represented in tabular form where rows correspond to values of $X$ and columns correspond to values of $Y$.
+
+\section{Example: Rolling Two Dice}
+
+\subsection{Experiment}
+Roll two fair dice.
+
+\[
+X = \text{value on first die}, \quad T = \text{sum of both dice}
+\]
+
+Each outcome $(i,j)$ has probability:
+\[
+\frac{1}{36}
+\]
+
+\subsection{Joint PMF Construction}
+The joint PMF table of $(X,T)$ contains values:
+\[
+p(x,t) =
+\begin{cases}
+\frac{1}{36}, & \text{if valid combination} \\
+0, & \text{otherwise}
+\end{cases}
+\]
+
+\subsection{Observation}
+\begin{itemize}
+    \item Entries are either $0$ or $\frac{1}{36}$
+    \item $X$ and $T$ are not independent
+\end{itemize}
+
+\section{Continuous Case: Joint PDF}
+
+\subsection{Analogy}
+\begin{itemize}
+    \item Discrete values $\rightarrow$ Continuous intervals
+    \item PMF $\rightarrow$ PDF
+    \item Summation $\rightarrow$ Double integration
+\end{itemize}
+
+\subsection{Domain}
+If:
+\[
+X \in [a,b], \quad Y \in [c,d]
+\]
+then:
+\[
+(X,Y) \in [a,b] \times [c,d]
+\]
+
+\subsection{Definition}
+A function $f(x,y)$ is a joint PDF if:
+\[
+P((X,Y) \text{ lies in a small rectangle}) \approx f(x,y)\,dx\,dy
+\]
+
+\subsection{Properties}
+\begin{itemize}
+    \item $f(x,y) \geq 0$
+    \item $\int_c^d \int_a^b f(x,y)\,dx\,dy = 1$
+\end{itemize}
+
+\textbf{Note:} $f(x,y)$ may be greater than 1 since it is a density.
+
+\section{Worked Example}
+
+Given:
+\[
+f(x,y) = 4xy, \quad 0 \leq x \leq 1, \quad 0 \leq y \leq 1
+\]
+
+\subsection{Step 1: Check Validity}
+\[
+\int_0^1 \int_0^1 4xy \, dx\, dy
+= \int_0^1 \left( \int_0^1 4xy\,dx \right) dy
+\]
+
+\[
+= \int_0^1 4y \left( \int_0^1 x\,dx \right) dy
+= \int_0^1 4y \cdot \frac{1}{2} \, dy
+= \int_0^1 2y\,dy
+\]
+
+\[
+= \left[ y^2 \right]_0^1 = 1
+\]
+
+Hence, $f(x,y)$ is a valid joint PDF.
+
+\subsection{Step 2: Compute $P(A)$}
+
+\[
+A = \{X < 0.5, Y > 0.5\}
+\]
+
+\[
+P(A) = \int_0^{0.5} \int_{0.5}^{1} 4xy\, dy\, dx
+\]
+
+First integrate w.r.t $y$:
+\[
+\int_{0.5}^{1} 4xy\,dy = 4x \left[\frac{y^2}{2}\right]_{0.5}^{1}
+= 4x \cdot \frac{1 - 0.25}{2}
+= 1.5x
+\]
+
+Now integrate w.r.t $x$:
+\[
+\int_0^{0.5} 1.5x\,dx = 1.5 \cdot \frac{x^2}{2} \Big|_0^{0.5}
+= \frac{3}{16}
+\]
+
+\[
+\boxed{P(A) = \frac{3}{16}}
+\]
+
+\section{Joint Cumulative Distribution Function (CDF)}
+
+\subsection{Definition}
+\[
+F(x,y) = P(X \leq x, Y \leq y)
+\]
+
+\section{Joint CDF: Continuous Case}
+
+\[
+F(x,y) = \int_c^y \int_a^x f(u,v)\,du\,dv
+\]
+
+\subsection{Recovering PDF}
+\[
+f(x,y) = \frac{\partial^2}{\partial x \partial y} F(x,y)
+\]
+
+\section{Joint CDF: Discrete Case}
+
+\[
+F(x,y) = \sum_{x_i \leq x} \sum_{y_j \leq y} p(x_i,y_j)
+\]
+
+\subsection{Interpretation}
+\begin{itemize}
+    \item Add probabilities from rows with $x_i \leq x$
+    \item Add probabilities from columns with $y_j \leq y$
+\end{itemize}
+
+\section{Properties of Joint CDF}
+
+\begin{itemize}
+    \item $F(x,y)$ is non-decreasing
+    \item $\lim_{(x,y)\to(-\infty,-\infty)} F(x,y) = 0$
+    \item $\lim_{(x,y)\to(\infty,\infty)} F(x,y) = 1$
+\end{itemize}
+
+\end{document}
