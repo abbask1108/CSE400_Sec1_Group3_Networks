@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Lecture 21 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+    \normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+    \vspace{0.2cm}
+    \textbf{CSE 400: Fundamentals of Probability in Computing}\\
+    \Large Lecture 21 Scribe 
+}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\vspace{-2cm}
+\begin{center}
+    \begin{tabular}{ll}
+        \textbf{Name:} & {Khushi Paghdar \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Enrollment No:} & {AU2440131 \hspace{2.5in}} \\ [1.5ex]
+        \textbf{Email:} & {khushi.p12@ahduni.edu.in \hspace{2.1in}} \\ [1.5ex]
+        \textbf{Lecture:} & {21 \hspace{2.9in}} \\ [1.5ex]
+        
+    \end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ===================== CONTENT =====================
+
+\section*{Objective}
+This scribe serves as an academic reference for exam preparation for Lecture 21.
+
+\section{Introduction to Tail Probabilities}
+
+\subsection{What is a Tail?}
+
+Let $X$ be a random variable. A tail probability refers to the probability that $X$ takes values far away from typical or expected values, specifically:
+\[
+P\{X > x\}
+\]
+
+This represents the right tail of the distribution.
+
+\subsection*{Step-by-Step Understanding}
+\begin{enumerate}
+    \item A random variable $X$ has a distribution over possible values.
+    \item Most values cluster around the mean $E[X]$.
+    \item The tail region consists of values much larger than the mean.
+    \item The expression $P\{X > x\}$ measures how likely it is that $X$ exceeds a threshold $x$.
+\end{enumerate}
+
+\subsection*{Interpretation}
+\begin{itemize}
+    \item If $x$ is large, then $P\{X > x\}$ should ideally be small.
+    \item This probability quantifies extreme events.
+\end{itemize}
+
+\section{Motivation for Tail Bounds}
+
+\subsection{Why Study Tail Bounds?}
+
+In many systems (especially computing systems), we are interested in bounding the probability of extreme events. Tail bounds help us:
+\begin{itemize}
+    \item Guarantee system performance
+    \item Ensure reliability
+    \item Limit the probability of undesirable outcomes
+\end{itemize}
+
+\section{Markov’s Inequality}
+
+\subsection{Statement}
+
+Let $X$ be a non-negative random variable. Then for any $a > 0$:
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\subsection{Conditions}
+\begin{itemize}
+    \item $X \geq 0$
+    \item $a > 0$
+\end{itemize}
+
+\section{Proof of Markov’s Inequality}
+
+\subsection*{Step-by-Step Proof}
+
+\begin{enumerate}
+    \item Start with expectation:
+    \[
+    E[X] = \sum x \cdot P(X = x)
+    \]
+
+    \item Split the sum into two parts:
+    \[
+    E[X] = \sum_{x < a} xP(X=x) + \sum_{x \geq a} xP(X=x)
+    \]
+
+    \item Since $x \geq a$ in second sum:
+    \[
+    \sum_{x \geq a} xP(X=x) \geq \sum_{x \geq a} aP(X=x)
+    \]
+
+    \item Therefore:
+    \[
+    E[X] \geq a \cdot P(X \geq a)
+    \]
+
+    \item Divide both sides by $a$:
+    \[
+    P(X \geq a) \leq \frac{E[X]}{a}
+    \]
+\end{enumerate}
+
+\section{Key Insights}
+
+\begin{itemize}
+    \item Provides an upper bound using only the mean.
+    \item Does not require full distribution knowledge.
+    \item Works only for non-negative random variables.
+\end{itemize}
+
+\section{Conclusion}
+
+Markov’s Inequality is a fundamental tool for bounding tail probabilities. It provides a simple yet powerful way to estimate the likelihood of extreme events using only expected value.
+
+\bigskip
+\hrule
+\vspace{0.2cm}
+\begin{center}
+    \small \textit{End of Submission}
+\end{center}
+
+\end{document}
