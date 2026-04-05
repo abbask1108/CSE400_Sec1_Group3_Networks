@@ -1,0 +1,604 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{amsmath, amssymb}   
+
+\begin{document}
+
+
+\noindent
+{\Large \textbf{CSE400 -- Lecture 21 Scribe}}
+
+\vspace{0.3cm}
+
+\noindent
+{\large Joint Random Variables and Joint Distributions}
+
+\vspace{0.5cm}
+
+\noindent
+\textbf{Name:} Tirth Pathar
+
+\noindent
+\textbf{Enrollment Number:} AU2440238
+
+\vspace{0.6cm}
+\hrule
+\vspace{0.6cm}
+
+\section*{1. Motivation for Tail Probabilities}
+
+\subsection*{Definition of Tail}
+
+\begin{itemize}
+    \item The tail of a random variable $X$ is defined as:
+\end{itemize}
+
+\[
+P(X > x)
+\]
+
+\begin{itemize}
+    \item This represents the probability that the random variable takes \textbf{large values beyond a threshold}.
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Why Do We Care About Tails?}
+
+From the lecture slides:
+
+\begin{itemize}
+    \item Jobs delayed more than 24 hours
+    \item Packets dropped due to full buffer
+\end{itemize}
+
+These correspond to \textbf{rare but important events}.
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Key Idea}
+
+\begin{itemize}
+    \item Mean $\rightarrow$ average behavior (easy)
+    \item Tail $\rightarrow$ rare extreme events (hard)
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Why Are Tail Probabilities Hard to Compute?}
+
+\begin{itemize}
+    \item Requires summing many small probabilities
+\end{itemize}
+
+\section*{Example 1: Load Balancing (Binomial Setting)}
+
+\begin{itemize}
+    \item Jobs are distributed among $n$ servers randomly
+    \item Question:
+\end{itemize}
+
+\[
+P(X \geq k)
+\]
+
+where $X$ = number of jobs at a particular server
+
+\begin{itemize}
+    \item Distribution:
+\end{itemize}
+
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\begin{itemize}
+    \item Exact computation:
+\end{itemize}
+
+\[
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\begin{itemize}
+    \item Interpretation:
+    \begin{itemize}
+        \item Most servers get few jobs
+        \item Occasionally, one server gets many jobs
+        \item This is a tail event (rare overload)
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{Example 2: Poisson Arrivals}
+
+\begin{itemize}
+    \item Jobs arrive with rate $\lambda$
+    \item Distribution:
+\end{itemize}
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\begin{itemize}
+    \item Tail probability:
+\end{itemize}
+
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\begin{itemize}
+    \item Interpretation:
+    \begin{itemize}
+        \item Most servers get few jobs
+        \item Occasionally, one server gets many jobs
+        \item This is a tail event (rare overload)
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{Example 2: Poisson Arrivals}
+
+\begin{itemize}
+    \item Jobs arrive with rate $\lambda$
+    \item Distribution:
+\end{itemize}
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\begin{itemize}
+    \item Tail probability:
+\end{itemize}
+
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\begin{itemize}
+    \item Interpretation:
+    \begin{itemize}
+        \item Most hours $\rightarrow$ moderate arrivals
+        \item Sometimes $\rightarrow$ burst of arrivals
+        \item This is a tail event (sudden spike)
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{Conclusion: Need for Bounds}
+
+\begin{itemize}
+    \item Exact tail probabilities:
+    \begin{itemize}
+        \item Require long summations
+        \item Are difficult to compute
+    \end{itemize}
+    \item Idea:
+    \begin{itemize}
+        \item Instead of exact value $\rightarrow$ compute upper bounds
+        \item Easier to compute
+        \item Still provides guarantees
+    \end{itemize}
+\end{itemize}
+
+\section*{2. Markov’s Inequality}
+
+\subsection*{Key Idea}
+
+\begin{itemize}
+    \item Uses only the mean
+    \item Large values are rare
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Formal Statement}
+
+For a non-negative random variable $X$:
+
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Conditions}
+
+\begin{itemize}
+    \item $X \geq 0$
+    \item Expectation $E[X]$ exists
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item If mean is small $\rightarrow$ probability of large deviations is small
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Example (from slide)}
+
+\begin{itemize}
+    \item Average = 10
+    \item Probability that values $\geq 100$ must be small
+\end{itemize}
+
+\section*{3. Chebyshev’s Inequality}
+
+\subsection*{Definition}
+
+\begin{itemize}
+    \item Uses both mean and variance
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Formal Statement}
+
+\[
+P(|X - \mu| \geq a) \leq \frac{\text{Var}(X)}{a^2}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Key Relation}
+
+\begin{itemize}
+    \item Mean: $\mu = E[X]$
+    \item Variance: measures spread
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item Probability of deviating far from mean is bounded
+    \item Larger variance $\rightarrow$ weaker bound
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Derivation}
+
+\begin{itemize}
+    \item Built using Markov’s inequality applied to:
+\end{itemize}
+
+\[
+(X - \mu)^2
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{4. Chernoff Bound}
+
+\subsection*{Motivation}
+
+\begin{itemize}
+    \item Markov and Chebyshev give loose bounds
+    \item Need tighter bounds
+\end{itemize}
+
+\subsection*{Key Idea}
+
+\begin{itemize}
+    \item Use exponential transformation
+    \item Apply Markov’s inequality to:
+\end{itemize}
+
+\[
+e^{tX}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{General Form}
+
+\[
+P(X \geq a) \leq \inf_{t > 0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item Provides exponentially decreasing bounds
+    \item Much tighter for sums of random variables
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Application}
+
+\begin{itemize}
+    \item Commonly used for:
+    \begin{itemize}
+        \item Binomial distributions
+        \item Sums of independent variables
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{5. Poisson Tail Bounds}
+
+\subsection*{Setting}
+
+\begin{itemize}
+    \item $X \sim \text{Poisson}(\lambda)$
+\end{itemize}
+
+\subsection*{Exact Tail}
+
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Observation}
+
+\begin{itemize}
+    \item Exact computation is complex
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Approach}
+
+\begin{itemize}
+    \item Apply Chernoff-type bounds
+    \item Obtain simpler upper bounds
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item Useful for analyzing:
+    \begin{itemize}
+        \item Arrival bursts
+        \item System overload probabilities
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{6. Jensen’s Inequality}
+
+\subsection*{Definition}
+
+\begin{itemize}
+    \item Applies to convex functions
+\end{itemize}
+
+\subsection*{Formal Statement}
+
+For convex function $f$:
+
+\[
+f(E[X]) \leq E[f(X)]
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Condition}
+
+\begin{itemize}
+    \item $f$ must be convex
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item Expectation inside function $\leq$ expectation outside
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Role}
+
+\begin{itemize}
+    \item Used in:
+    \begin{itemize}
+        \item Bounding expectations
+        \item Deriving Chernoff bounds
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{7. Running Example (Used Throughout Lecture)}
+
+\subsection*{Setup}
+
+\begin{itemize}
+    \item Flip a fair coin $n$ times
+    \item Let:
+\end{itemize}
+
+\[
+X = \text{number of heads}
+\]
+
+\subsection*{Distribution}
+
+\[
+X \sim \text{Binomial}\left(n, \frac{1}{2}\right)
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Mean}
+
+\[
+E[X] = \frac{n}{2}
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Tail Question}
+
+\[
+P\left(X \geq \frac{3n}{4}\right)
+\]
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Interpretation}
+
+\begin{itemize}
+    \item Tail region = unusually many heads
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Purpose}
+
+\begin{itemize}
+    \item Compare:
+    \begin{itemize}
+        \item Markov
+        \item Chebyshev
+        \item Chernoff
+    \end{itemize}
+    on the same example
+\end{itemize}
+
+\section*{8. Additional Observations / System-Level Insights}
+
+\subsection*{Comparison of Bounds}
+
+\begin{itemize}
+    \item Markov:
+    \begin{itemize}
+        \item Uses only mean
+        \item Weak bound
+    \end{itemize}
+    \item Chebyshev:
+    \begin{itemize}
+        \item Uses variance
+        \item Better than Markov
+    \end{itemize}
+    \item Chernoff:
+    \begin{itemize}
+        \item Uses exponential method
+        \item Tightest bound
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{System Interpretation}
+
+\begin{itemize}
+    \item Tail events correspond to:
+    \begin{itemize}
+        \item Server overload
+        \item Queue delays
+        \item Traffic bursts
+    \end{itemize}
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Key Insight}
+
+\begin{itemize}
+    \item Exact computation $\rightarrow$ complex
+    \item Bounds $\rightarrow$ simple + safe approximation
+\end{itemize}
+
+\hrule
+
+\vspace{0.5cm}
+
+\subsection*{Final Key Idea of Lecture}
+
+\begin{itemize}
+    \item Approximate safely instead of computing exactly
+\end{itemize}
+
+\end{document}
