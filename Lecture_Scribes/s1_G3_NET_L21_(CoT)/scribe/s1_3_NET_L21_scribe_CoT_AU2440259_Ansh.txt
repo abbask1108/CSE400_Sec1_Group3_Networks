@@ -1,0 +1,208 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath, amssymb}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400: Fundamentals of Probability in Computing\\
+Lecture 21 \& 22: Inequalities and Tail Bounds}
+\author{Based strictly on lecture slides}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section{Introduction and Outline}
+
+Topics covered:
+\begin{itemize}
+    \item Tail and motivation of tail bounds
+    \item Markov's Inequality (definition, proof, example)
+    \item Chebyshev's Inequality (definition, proof, example)
+    \item Chernoff Bound and Poisson Tail (definition, proof, example)
+    \item Jensen's Inequality (convex functions, proof, example)
+    \item Case study and system-level understanding
+\end{itemize}
+
+\section{Definition of Tail}
+
+\textbf{Definition:} The tail of a random variable $X$ is defined as:
+\[
+P(X > x)
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item The definition directly specifies that the tail corresponds to probabilities of values greater than a threshold $x$.
+    \item No transformation or derivation is applied; it is a direct definition.
+\end{itemize}
+
+\section{Motivation for Tail Analysis}
+
+\subsection{Why do we care about tails?}
+\begin{itemize}
+    \item Jobs delayed more than 24 hours
+    \item Packets dropped due to full buffer
+\end{itemize}
+
+\subsection{Key Idea}
+\begin{itemize}
+    \item Mean $\rightarrow$ average behavior (easy)
+    \item Tail $\rightarrow$ rare extreme events (hard)
+\end{itemize}
+
+\subsection{Why are tails hard to compute?}
+\begin{itemize}
+    \item Requires summing many small probabilities
+\end{itemize}
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item Tail probabilities involve aggregation over many low-probability events.
+    \item This leads to computational difficulty due to long summations.
+\end{itemize}
+
+\section{Example 1: Binomial Setting}
+
+\subsection{Problem Statement}
+Suppose $n$ jobs are distributed among $n$ servers at random.
+
+What is:
+\[
+P(\text{a particular server gets } \geq k \text{ jobs})?
+\]
+
+\subsection{Model}
+\[
+X \sim \text{Binomial}(n, p)
+\]
+
+\subsection{Exact Probability}
+\[
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item The binomial distribution models the number of jobs assigned.
+    \item The tail probability is computed by summing probabilities from $k$ to $n$.
+    \item Each term corresponds to exactly $i$ jobs.
+\end{itemize}
+
+\section{Example 2: Poisson Setting}
+
+\subsection{Problem Statement}
+Jobs arrive according to a Poisson process with rate $\lambda$ jobs/hour.
+
+What is:
+\[
+P(X \geq k)?
+\]
+
+\subsection{Model}
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\subsection{Exact Probability}
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item The Poisson distribution models arrivals over time.
+    \item The tail is computed as an infinite sum starting from $k$.
+    \item Each term corresponds to exactly $i$ arrivals.
+\end{itemize}
+
+\section{Why Tail Bounds?}
+
+\subsection{Observation}
+Exact tail probabilities are often hard to compute.
+
+\subsection{Exact Computation Forms}
+\[
+P(X \geq k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\[
+P(X \geq k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+\subsection{Conclusion}
+\begin{itemize}
+    \item These involve long and complicated summations.
+\end{itemize}
+
+\subsection{Idea: Bounding Instead of Exact Computation}
+\begin{itemize}
+    \item Find an upper bound
+    \item Easier to compute
+    \item Still provides a guarantee
+\end{itemize}
+
+\subsection{Key Idea}
+\[
+P(X \geq k) \leq \text{(simple bound)}
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item Instead of exact evaluation, we approximate safely.
+    \item Bounds reduce computational complexity.
+\end{itemize}
+
+\section{Running Example}
+
+\subsection{Setup}
+\begin{itemize}
+    \item Flip a fair coin $n$ times
+    \item Let $X$ = number of heads
+\end{itemize}
+
+\subsection{Distribution}
+\[
+X \sim \text{Binomial}(n, \tfrac{1}{2})
+\]
+
+\subsection{Mean}
+\[
+E[X] = \frac{n}{2}
+\]
+
+\subsection{Tail Probability of Interest}
+\[
+P\left(X \geq \frac{3n}{4}\right)
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item The mean is derived directly from binomial expectation.
+    \item The tail corresponds to unusually large number of heads.
+\end{itemize}
+
+\section{Markov's Inequality}
+
+\subsection{Key Idea}
+\begin{itemize}
+    \item Uses only the mean
+    \item Large values are rare
+\end{itemize}
+
+\subsection{Statement}
+\[
+P(X \geq a) \leq \frac{E[X]}{a}
+\]
+
+\subsection{Reasoning}
+\begin{itemize}
+    \item The inequality bounds tail probability using only expectation.
+    \item No additional distributional information is required.
+\end{itemize}
+
+\subsection{Example Insight}
+\begin{itemize}
+    \item If average is 10, very large values (e.g., 100+) must be rare.
+\end{itemize}
+
+\end{document}
