@@ -1,0 +1,392 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\title{CSE400: Lecture 21 Scribe \\ Inequalities and Tail Bounds}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction to Tails}
+
+\subsection{Definition}
+The \textbf{tail} of a random variable $X$ is:
+\[
+P(X > x)
+\]
+
+\subsection{Motivation}
+We care about tail probabilities because they represent \textbf{rare extreme events}:
+\begin{itemize}
+    \item Jobs delayed more than 24 hours
+    \item Packets dropped due to full buffer
+\end{itemize}
+
+\textbf{Key Idea:}
+\begin{itemize}
+    \item Mean $\rightarrow$ average behavior (easy)
+    \item Tail $\rightarrow$ rare extreme events (hard)
+\end{itemize}
+
+\textbf{Why hard?}
+\begin{itemize}
+    \item Requires summing many small probabilities
+\end{itemize}
+
+---
+
+\section{Tail Examples}
+
+\subsection{Example 1: Load Balancing}
+Suppose $n$ jobs are distributed among $n$ servers.
+
+Let $X =$ number of jobs assigned to a server.
+
+\[
+X \sim \text{Binomial}(n,p)
+\]
+
+We want:
+\[
+P(X \ge k) = \sum_{i=k}^{n} \binom{n}{i} p^i (1-p)^{n-i}
+\]
+
+This represents a \textbf{tail event} (rare overload).
+
+---
+
+\subsection{Example 2: Poisson Arrivals}
+
+Jobs arrive with rate $\lambda$.
+
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\[
+P(X \ge k) = \sum_{i=k}^{\infty} e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+This represents a \textbf{sudden spike in load}.
+
+---
+
+\section{Why Tail Bounds?}
+
+Exact computation:
+\[
+P(X \ge k) = \sum \text{(long sums)}
+\]
+
+\textbf{Problem:} Computationally complex.
+
+\textbf{Idea:}
+\begin{itemize}
+    \item Find an \textbf{upper bound}
+    \item Easier to compute
+    \item Still guarantees correctness
+\end{itemize}
+
+\[
+P(X \ge k) \le \text{simple bound}
+\]
+
+\textbf{Key Idea:} Approximate safely instead of computing exactly.
+
+---
+
+\section{Running Example}
+
+Flip a fair coin $n$ times.
+
+\[
+X \sim \text{Binomial}(n, \tfrac{1}{2})
+\]
+
+\[
+E[X] = \frac{n}{2}
+\]
+
+Question:
+\[
+P\left(X \ge \frac{3n}{4}\right)
+\]
+
+---
+
+\section{Markov's Inequality}
+
+\subsection{Statement}
+
+For non-negative $X$:
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+\subsection{Key Idea}
+\begin{itemize}
+    \item Uses only mean
+    \item Large values are rare
+\end{itemize}
+
+---
+
+\subsection{Proof}
+
+\[
+E[X] = \sum_{x} x \cdot p_X(x)
+\]
+
+Consider only $x \ge a$:
+
+\[
+E[X] \ge \sum_{x \ge a} x p_X(x)
+\]
+
+Since $x \ge a$:
+
+\[
+E[X] \ge \sum_{x \ge a} a \cdot p_X(x)
+= a \sum_{x \ge a} p_X(x)
+= a P(X \ge a)
+\]
+
+Thus:
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+---
+
+\subsection{Running Example Application}
+
+\[
+E[X] = \frac{n}{2}, \quad a = \frac{3n}{4}
+\]
+
+\[
+P\left(X \ge \frac{3n}{4}\right) \le \frac{n/2}{3n/4} = \frac{2}{3}
+\]
+
+\textbf{Observation:} Very loose bound (does not depend on $n$).
+
+---
+
+\subsection{Real-Life Example}
+
+Average income = 10,000.
+
+\[
+P(X \ge 50,000) \le \frac{10,000}{50,000} = 0.2
+\]
+
+At most 20\% earn 50,000.
+
+---
+
+\subsection{Solved Example 1}
+
+Given:
+\[
+E[X] = 70, \quad a = 90
+\]
+
+\[
+P(X \ge 90) \le \frac{70}{90} = \frac{7}{9}
+\]
+
+---
+
+\subsection{Solved Example 2}
+
+\[
+E[X] = 5000, \quad a = 20000
+\]
+
+\[
+P(X \ge 20000) \le \frac{5000}{20000} = \frac{1}{4}
+\]
+
+---
+
+\section{Chebyshev's Inequality}
+
+\subsection{Key Idea}
+\begin{itemize}
+    \item Uses mean + variance
+    \item Controls deviation from mean
+\end{itemize}
+
+\subsection{Statement}
+
+\[
+P(|X - \mu| \ge a) \le \frac{\text{Var}(X)}{a^2}
+\]
+
+---
+
+\subsection{Proof Idea}
+
+Apply Markov on $(X - \mu)^2$:
+
+\[
+P(|X - \mu| \ge a) = P((X-\mu)^2 \ge a^2)
+\]
+
+\[
+\le \frac{E[(X-\mu)^2]}{a^2}
+= \frac{\text{Var}(X)}{a^2}
+\]
+
+---
+
+\subsection{Running Example}
+
+\[
+\mu = \frac{n}{2}, \quad \text{Var}(X) = \frac{n}{4}
+\]
+
+\[
+P\left(X \ge \frac{3n}{4}\right)
+= P\left(X - \frac{n}{2} \ge \frac{n}{4}\right)
+\]
+
+\[
+\le \frac{n/4}{(n/4)^2} = \frac{1}{n}
+\]
+
+\textbf{Better than Markov (depends on $n$).}
+
+---
+
+\subsection{Real-Life Example}
+
+\[
+\mu = 70, \quad \sigma = 10
+\]
+
+\[
+P(|X - 70| \ge 30) \le \frac{100}{900} = \frac{1}{9}
+\]
+
+---
+
+\subsection{Solved Example 1}
+
+\[
+\mu = 70, \quad \sigma^2 = 25, \quad a = 20
+\]
+
+\[
+P(X \ge 90) \le P(|X-70| \ge 20)
+\]
+
+\[
+\le \frac{25}{400} = \frac{1}{16}
+\]
+
+---
+
+\subsection{Solved Example 2}
+
+\[
+\mu = 50, \quad \sigma^2 = 16, \quad a = 20
+\]
+
+\[
+P(|X-50| \ge 20) \le \frac{16}{400} = \frac{1}{25}
+\]
+
+---
+
+\section{Chernoff Bound}
+
+\subsection{Key Idea}
+
+Progression:
+\begin{itemize}
+    \item Markov: use $X$
+    \item Chebyshev: use $(X-\mu)^2$
+    \item Chernoff: use $e^{tX}$
+\end{itemize}
+
+\textbf{Insight:}
+\begin{itemize}
+    \item Exponential grows very fast
+    \item Amplifies large values
+    \item Leads to tighter bounds
+\end{itemize}
+
+---
+
+\subsection{Core Trick}
+
+\[
+P(X \ge a) = P(e^{tX} \ge e^{ta})
+\]
+
+Apply Markov:
+
+\[
+P(e^{tX} \ge e^{ta}) \le \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+---
+
+\subsection{Final Form}
+
+\[
+P(X \ge a) \le \min_{t > 0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+\textbf{Key Insight:}
+\begin{itemize}
+    \item Holds for all $t > 0$
+    \item Choose best $t$ for tightest bound
+\end{itemize}
+
+---
+
+\subsection{Lower Tail}
+
+\[
+P(X \le a) \le \min_{t < 0} \frac{E[e^{tX}]}{e^{ta}}
+\]
+
+---
+
+\section{Chernoff for Poisson}
+
+\subsection{Goal}
+
+Bound tail for:
+\[
+X \sim \text{Poisson}(\lambda)
+\]
+
+\subsection{Step 1: Compute MGF}
+
+\[
+E[e^{tX}] = \sum_{i=0}^{\infty} e^{ti} \cdot e^{-\lambda} \frac{\lambda^i}{i!}
+\]
+
+\[
+= e^{-\lambda} \sum_{i=0}^{\infty} \frac{(\lambda e^t)^i}{i!}
+\]
+
+\[
+= e^{-\lambda} e^{\lambda e^t}
+= e^{\lambda (e^t - 1)}
+\]
+
+---
+
+\textbf{This is used inside Chernoff bound to get final tail bounds.}
+
+---
+
+\end{document}
