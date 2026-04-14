@@ -1,0 +1,145 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{geometry}
+\usepackage{enumerate}
+
+\geometry{a4paper, margin=1in}
+
+\begin{document}
+
+\section*{Lecture Scribe: Inequalities (Problem Solving)}
+
+\subsection*{1. Markov’s Inequality}
+\textbf{Statement} \\
+For a non-negative random variable $X \ge 0$ and $a > 0$:
+\[ P(X \ge a) \le \frac{E[X]}{a} \]
+
+\textbf{Key Conditions}
+\begin{itemize}
+    \item $X \ge 0$
+    \item Applicable only to upper tail probabilities
+\end{itemize}
+
+\textbf{Application Example}
+\[ P(X \ge 120000) \le \frac{40000}{120000} = \frac{1}{3} \]
+
+\textbf{Limitation} \\
+Cannot be used for lower tail events: $P(X < a)$.
+
+\subsection*{2. Chebyshev’s Inequality}
+\textbf{Statement} \\
+For any random variable $X$ with mean $\mu$ and variance $\sigma^2$:
+\[ P(|X - \mu| \ge a) \le \frac{\sigma^2}{a^2} \]
+
+\textbf{Application Steps}
+\begin{enumerate}
+    \item Express deviation: $|X - \mu| \ge a$
+    \item Substitute into inequality
+\end{enumerate}
+
+\textbf{Example}
+\[ P(|X - 100| \ge 6) \le \frac{4}{36} = \frac{1}{9} \]
+
+\textbf{Interpretation} \\
+Gives an upper bound on deviation probability. For instance, if checking 10,000 samples:
+\[ \text{Expected Count} \approx 10000 \times \frac{1}{9} \approx 1111 \]
+
+\subsection*{3. Convexity + Expectation Inequality}
+\textbf{Setup} \\
+$0 \le Y \le 1$, $E[Y] = \mu$. Consider the convex function $g(x) = e^x$.
+
+\textbf{Steps}
+\begin{itemize}
+    \item Convex combination: $Y = (1-Y)\cdot 0 + Y \cdot 1$
+    \item Apply convexity: $e^{tY} \le (1-Y)e^0 + Ye^t$
+    \item Take expectation: $E[e^{tY}] \le 1 - E[Y] + e^t E[Y]$
+\end{itemize}
+
+\textbf{Final Result}
+\[ E[e^{tY}] \le 1 - \mu + \mu e^t \]
+
+\subsection*{4. Jensen’s Inequality}
+\textbf{Statement} \\
+For a convex function $g$:
+\[ g(E[X]) \le E[g(X)] \]
+
+\textbf{Application} \\
+Function: $g(x) = x^a$ for $a > 1$.
+\begin{itemize}
+    \item \textbf{Convexity Check:} $g''(x) = a(a-1)x^{a-2} > 0$
+    \item \textbf{Result:} $(E[X])^a \le E[X^a]$
+\end{itemize}
+
+\subsection*{5. Chebyshev via Markov (Derivation)}
+\textbf{Goal}
+\[ P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2} \]
+
+\textbf{Steps}
+\begin{enumerate}
+    \item Define: $Z = (X - \mu)^2 \ge 0$
+    \item Rewrite: $P(|X-\mu|\ge k\sigma) = P((X-\mu)^2 \ge k^2\sigma^2)$
+    \item Apply Markov: $\le \frac{E[(X-\mu)^2]}{k^2\sigma^2}$
+    \item Use variance: $E[(X-\mu)^2] = \sigma^2$
+\end{enumerate}
+
+\textbf{Final Result}
+\[ P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2} \]
+
+\subsection*{6. Combined Inequality Use}
+\begin{itemize}
+    \item \textbf{Markov:} $P(X \ge 1000) \le \frac{500}{1000} = \frac{1}{2}$
+    \item \textbf{Chebyshev:} $P(|X - 500| \ge 100) \le \frac{100}{10000} = \frac{1}{100}$
+    \item \textbf{Final Probability:} $P(400 \le X \le 600) \ge \frac{99}{100}$
+\end{itemize}
+
+\subsection*{7. MGF Bounding Technique}
+\textbf{Given}
+\[ E[e^{tX_i}] = \frac{e^t + e^{-t}}{2} \]
+
+\textbf{Series Expansion}
+\[ e^t + e^{-t} = 2 \sum_{n=0}^{\infty} \frac{t^{2n}}{(2n)!} \]
+
+\textbf{Using Inequality} $(2n)! \ge n!2^n$:
+\[ E[e^{tX_i}] \le e^{t^2/2} \]
+For sum $S_n$:
+\[ E[e^{tS_n}] \le e^{nt^2/2} \]
+
+\subsection*{8. Indicator Variables \& Variance}
+\textbf{Definition:} $X = \sum_{i=1}^{100} X_i$
+\begin{itemize}
+    \item \textbf{Expectations:} $E[X_i] = \frac{100}{199}$, $E[X] = 100 \cdot \frac{100}{199}$
+    \item \textbf{Variance:} $Var(X) = \sum Var(X_i) + 2\sum Cov(X_i,X_j)$
+    \item \textbf{Chebyshev Application:} $P(X \le 30) \le \frac{25.126}{(20.25)^2}$
+\end{itemize}
+
+\subsection*{9. Jensen on Sums}
+\textbf{Function:} $f(x) = \sqrt{1 + x^2}$
+\begin{itemize}
+    \item \textbf{Application:} $\frac{1}{n} \sum_{k=1}^n \sqrt{k^2 + 1} \ge \sqrt{1 + \left(\frac{1+2+\cdots+n}{n}\right)^2}$
+    \item \textbf{Final Result:} $\sum_{k=1}^n \sqrt{k^2 + 1} \ge \frac{n}{2}\sqrt{n^2 + 2n + 5}$
+\end{itemize}
+
+\subsection*{10. Tail Bounds Comparison (Poisson)}
+Given $X \sim \text{Poisson}(20)$, find $P(X \ge 26)$:
+\begin{enumerate}
+    \item \textbf{Markov:} $P(X \ge 26) \le \frac{20}{26} = \frac{10}{13}$
+    \item \textbf{One-sided Chebyshev:} $P(X \ge 26) \le \frac{20}{20 + 36} = \frac{5}{14}$
+    \item \textbf{Chernoff Bound:} $P(X \ge 26) \le \inf_{t>0} \exp(20(e^t - 1) - 26t)$
+    \begin{itemize}
+        \item Optimal $t = \ln(1.3)$
+        \item Result: $\le e^{6 - 26\ln(1.3)} \approx 0.439$
+    \end{itemize}
+\end{enumerate}
+
+\subsection*{Summary of Key Results}
+\begin{itemize}
+    \item Markov: $\displaystyle P(X \ge a) \le \frac{E[X]}{a}$
+    \item Chebyshev: $\displaystyle P(|X-\mu|\ge a)\le \frac{\sigma^2}{a^2}$
+    \item Jensen: $\displaystyle g(E[X]) \le E[g(X)]$
+    \item Derived Chebyshev: $\displaystyle P(|X-\mu|\ge k\sigma)\le \frac{1}{k^2}$
+    \item Chernoff: Exponential tail bound using MGF
+\end{itemize}
+
+\end{document}
