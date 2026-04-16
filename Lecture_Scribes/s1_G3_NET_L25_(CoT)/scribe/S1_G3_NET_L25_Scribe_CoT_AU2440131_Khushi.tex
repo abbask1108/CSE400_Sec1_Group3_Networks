@@ -1,0 +1,324 @@
+\documentclass[11pt]{article}
+
+% ===================== PACKAGES =====================
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{xcolor}
+
+% ===================== HEADER & FOOTER =====================
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{CSE 400: Fundamentals of Probability in Computing}
+\rhead{Lecture 25 Scribe}
+\cfoot{\thepage}
+
+% ===================== TITLE =====================
+\title{
+\normalsize School of Engineering and Applied Science (SEAS), Ahmedabad University \\
+\vspace{0.2cm}
+\textbf{CSE 400: Fundamentals of Probability in Computing}\\
+\Large Lecture 25: Problem Solving and Tutorial Session (Inequalities)
+}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+\vspace{-2cm}
+
+% ===================== STUDENT INFO =====================
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Name:} & {Khushi Paghadar \hspace{2.5in}} \\
+\textbf{Enrollment No:} & {AU2440131 \hspace{2.5in}} \\
+\textbf{Email:} & {khushi.p12@ahduni.edu.in \hspace{2.1in}} \\
+\end{tabular}
+\end{center}
+
+\hrule
+\vspace{0.5cm}
+
+% ===================== OBJECTIVE =====================
+\section*{Objective}
+This scribe serves as an academic reference for exam preparation for Lecture 25
+
+\section*{Overview}
+This lecture focuses on applying probabilistic inequalities—primarily Markov, Chebyshev, Jensen, and Chernoff bounds—to solve structured problems. Each solution explicitly follows a step-by-step reasoning process, including identification of the random variable, choice of inequality, and justification.
+
+\vspace{0.5cm}
+
+% ===================== Q1 =====================
+\section*{Q1: Markov’s Inequality (Income Problem)}
+
+\textbf{Given:} Random variable $X$ (Annual income), $E[X] = 40{,}000$
+
+\textbf{(a) Find $P(X \ge 120{,}000)$}
+
+Step 1: Identify inequality \\
+Only mean is known and $X \ge 0$ \\
+$\Rightarrow$ Use Markov’s Inequality:
+\[
+P(X \ge a) \le \frac{E[X]}{a}
+\]
+
+Step 2: Apply
+\[
+P(X \ge 120{,}000) \le \frac{40{,}000}{120{,}000} = \frac{1}{3}
+\]
+
+Final Answer:
+\[
+P(X \ge 120{,}000) \le \frac{1}{3}
+\]
+
+\textbf{(b) Can we bound $P(X < 10{,}000)$}
+
+Reasoning: \\
+Markov applies only to $X \ge 0$ and upper tail probabilities. \\
+This is a lower-tail probability.
+
+Conclusion: Cannot use Markov’s inequality.
+
+\vspace{0.5cm}
+
+% ===================== Q2 =====================
+\section*{Q2: Chebyshev’s Inequality (Resistor Problem)}
+
+Given: $\mu = 100$, $\sigma = 2$, defective outside $[94,106]$
+
+Step 1: Convert interval
+\[
+|X - 100| \ge 6
+\]
+
+\[
+k = \frac{6}{2} = 3
+\]
+
+Step 2: Apply Chebyshev
+\[
+P(|X - \mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+
+\[
+P(\text{defective}) \le \frac{1}{9}
+\]
+
+Step 3: Expected defective out of 10,000
+\[
+10{,}000 \times \frac{1}{9} \approx 1111
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q3 =====================
+\section*{Q3: Convexity and Expectation Bound}
+
+Given: $0 \le Y \le 1$, $E[Y] = \mu$
+
+Step 1: Identify tool \\
+$g(x) = e^x$ is convex
+
+Step 2: Express $Y$ as mixture
+\[
+Y = (1-Y)\cdot 0 + Y \cdot 1
+\]
+
+Step 3: Apply convexity
+\[
+e^{tY} \le (1-Y)e^0 + Y e^t
+\]
+\[
+e^{tY} \le (1-Y) + Y e^t
+\]
+
+Step 4: Take expectation
+\[
+E[e^{tY}] \le 1 - \mu + \mu e^t
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q4 =====================
+\section*{Q4: Jensen’s Inequality (Power Function)}
+
+Given: $X > 0$, $f(x)=x^a$, $a>1$
+
+Step 1: Identify convexity \\
+$f(x)$ is convex
+
+Step 2: Apply Jensen
+\[
+E[X^a] \ge (E[X])^a
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q5 =====================
+\section*{Q5: Chebyshev General Form}
+
+To show:
+\[
+P(|X-\mu| \ge k\sigma) \le \frac{1}{k^2}
+\]
+
+Derivation:
+
+Apply Markov on $(X-\mu)^2$:
+\[
+P((X-\mu)^2 \ge k^2\sigma^2) \le \frac{E[(X-\mu)^2]}{k^2\sigma^2}
+\]
+\[
+= \frac{\sigma^2}{k^2\sigma^2} = \frac{1}{k^2}
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q6 =====================
+\section*{Q6: Production Problem}
+
+(a)
+\[
+P(X \ge 1000) \le \frac{500}{1000} = \frac{1}{2}
+\]
+
+(b)
+
+Step 1:
+\[
+|X-500| < 100
+\]
+
+Step 2:
+\[
+P(|X-500| \ge 100) \le \frac{1}{100}
+\]
+
+Step 3:
+\[
+P(400 \le X \le 600) \ge 1 - \frac{1}{100} = 0.99
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q7 =====================
+\section*{Q7: Chernoff Bound Setup}
+
+Given: $X_i = \pm1$ (equal probability)
+
+(a)
+\[
+E[e^{tX_i}] = \frac{e^t + e^{-t}}{2}
+\]
+
+(b) For sum $S_n$
+\[
+E[e^{tS_n}] = \prod E[e^{tX_i}] = \left(\frac{e^t + e^{-t}}{2}\right)^n
+\]
+
+\vspace{0.5cm}
+
+% ===================== Q8 =====================
+\section*{Q8: Pairing Problem}
+
+Goal: Bound probability that $\le 30$ mixed pairs
+
+Approach:
+Let $X$ = number of mixed pairs
+
+Use Chernoff bound (lower tail)
+
+Reasoning:
+Sum of dependent indicators \\
+Approximate using Chernoff \\
+Bound deviation below mean
+
+\vspace{0.5cm}
+
+% ===================== Q9 =====================
+\section*{Q9: Inequality Proof}
+
+Goal:
+\[
+\sum_{i=1}^{n} \frac{i}{i+1} \ge \frac{n(n+2)}{2(n+1)}
+\]
+
+Approach:
+Use bounding techniques \\
+Recognize monotonic growth
+
+\vspace{0.5cm}
+
+% ===================== Q10 =====================
+\section*{Q10: Poisson Tail Bounds}
+
+Given: $X \sim \text{Poisson}(20)$
+
+Want: $P(X \ge 26)$
+
+(a) Markov
+\[
+P(X \ge 26) \le \frac{20}{26}
+\]
+
+(b) Chebyshev
+\[
+P(X - 20 \ge 6) \le \frac{20}{36}
+\]
+
+(c) Chernoff
+
+Step 1: MGF
+\[
+M_X(t) = e^{20(e^t - 1)}
+\]
+
+Step 2:
+\[
+P(X \ge 26) \le \inf_{t>0} e^{-26t} M_X(t)
+\]
+
+Step 3: Optimize
+\[
+20e^t = 26 \Rightarrow e^t = 1.3
+\]
+
+\vspace{0.5cm}
+
+% ===================== TAKEAWAYS =====================
+\section*{Key Takeaways}
+
+1. When to use which inequality \\
+Markov $\rightarrow$ only mean known, upper tail \\
+Chebyshev $\rightarrow$ mean + variance \\
+Chernoff $\rightarrow$ tighter bounds \\
+Jensen $\rightarrow$ convexity
+
+\vspace{0.3cm}
+
+2. Strategy:
+\begin{enumerate}
+\item Identify random variable
+\item Check given info
+\item Select inequality
+\item Convert form
+\item Apply carefully
+\end{enumerate}
+
+\vspace{0.3cm}
+
+3. Exam Tip:
+
+Always justify why a specific inequality is used.
+
+\bigskip
+\hrule
+
+\begin{center}
+\small \textit{End of Lecture 25 Scribe}
+\end{center}
+
+\end{document}
